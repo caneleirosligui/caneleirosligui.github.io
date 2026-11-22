@@ -1,0 +1,442 @@
+{
+  "rodada_referencia": 35,
+  "pontos": 145.4902,
+  "vencedores": [
+    {
+      "rodada": 13,
+      "time_id": 1280429,
+      "nome": "C.R.Fabio1982",
+      "dono": "Fábio",
+      "pontos": 145.4902
+    }
+  ],
+  "empate": false,
+  "historico_maximos_por_rodada": [
+    {
+      "rodada": 1,
+      "pontos": 81.46,
+      "times": [
+        {
+          "time_id": 114758,
+          "nome": "CWB - BSB",
+          "dono": "Marcelo Botelho",
+          "pontos": 81.46
+        }
+      ]
+    },
+    {
+      "rodada": 2,
+      "pontos": 102.5801,
+      "times": [
+        {
+          "time_id": 4822028,
+          "nome": "Rangel Madrid CF",
+          "dono": "Fábio Rangel",
+          "pontos": 102.5801
+        }
+      ]
+    },
+    {
+      "rodada": 3,
+      "pontos": 113.46,
+      "times": [
+        {
+          "time_id": 14773279,
+          "nome": "Bom Vasco F.C.",
+          "dono": "Marcelo B Jagger",
+          "pontos": 113.46
+        }
+      ]
+    },
+    {
+      "rodada": 4,
+      "pontos": 99.25,
+      "times": [
+        {
+          "time_id": 25723296,
+          "nome": "FLABRASCHER",
+          "dono": "Rômulo",
+          "pontos": 99.25
+        }
+      ]
+    },
+    {
+      "rodada": 5,
+      "pontos": 108.2002,
+      "times": [
+        {
+          "time_id": 18046434,
+          "nome": "FLASTAR FC",
+          "dono": "Amauri",
+          "pontos": 108.2002
+        }
+      ]
+    },
+    {
+      "rodada": 6,
+      "pontos": 90.0498,
+      "times": [
+        {
+          "time_id": 3057019,
+          "nome": "MarkPlay FC",
+          "dono": "Marquinhos",
+          "pontos": 90.0498
+        }
+      ]
+    },
+    {
+      "rodada": 7,
+      "pontos": 84.4102,
+      "times": [
+        {
+          "time_id": 143442,
+          "nome": "Time do Cuné",
+          "dono": "Cuné",
+          "pontos": 84.4102
+        }
+      ]
+    },
+    {
+      "rodada": 8,
+      "pontos": 91.6499,
+      "times": [
+        {
+          "time_id": 4981831,
+          "nome": "Cruzmaltinus",
+          "dono": "Wilson",
+          "pontos": 91.6499
+        }
+      ]
+    },
+    {
+      "rodada": 9,
+      "pontos": 120.6602,
+      "times": [
+        {
+          "time_id": 25544980,
+          "nome": "Flagunner20",
+          "dono": "Tarek",
+          "pontos": 120.6602
+        }
+      ]
+    },
+    {
+      "rodada": 10,
+      "pontos": 74.27,
+      "times": [
+        {
+          "time_id": 13981183,
+          "nome": "FielMetal",
+          "dono": "Rafael Candelária",
+          "pontos": 74.27
+        }
+      ]
+    },
+    {
+      "rodada": 11,
+      "pontos": 109.6602,
+      "times": [
+        {
+          "time_id": 4822028,
+          "nome": "Rangel Madrid CF",
+          "dono": "Fábio Rangel",
+          "pontos": 109.6602
+        }
+      ]
+    },
+    {
+      "rodada": 12,
+      "pontos": 106.8101,
+      "times": [
+        {
+          "time_id": 25906859,
+          "nome": "Albus SEP Ousado 2",
+          "dono": "Luis Didi",
+          "pontos": 106.8101
+        }
+      ]
+    },
+    {
+      "rodada": 13,
+      "pontos": 145.4902,
+      "times": [
+        {
+          "time_id": 1280429,
+          "nome": "C.R.Fabio1982",
+          "dono": "Fábio",
+          "pontos": 145.4902
+        }
+      ]
+    },
+    {
+      "rodada": 14,
+      "pontos": 79.4502,
+      "times": [
+        {
+          "time_id": 1183780,
+          "nome": "RevoredoSC",
+          "dono": "André Revoredo",
+          "pontos": 79.4502
+        }
+      ]
+    },
+    {
+      "rodada": 15,
+      "pontos": 76.9502,
+      "times": [
+        {
+          "time_id": 25723296,
+          "nome": "FLABRASCHER",
+          "dono": "Rômulo",
+          "pontos": 76.9502
+        }
+      ]
+    },
+    {
+      "rodada": 16,
+      "pontos": 94.3301,
+      "times": [
+        {
+          "time_id": 3057019,
+          "nome": "MarkPlay FC",
+          "dono": "Marquinhos",
+          "pontos": 94.3301
+        }
+      ]
+    },
+    {
+      "rodada": 17,
+      "pontos": 101.52,
+      "times": [
+        {
+          "time_id": 13988691,
+          "nome": "Big Head Mengão",
+          "dono": "Flávio Henrique",
+          "pontos": 101.52
+        }
+      ]
+    },
+    {
+      "rodada": 18,
+      "pontos": 135.9004,
+      "times": [
+        {
+          "time_id": 18046434,
+          "nome": "FLASTAR FC",
+          "dono": "Amauri",
+          "pontos": 135.9004
+        }
+      ]
+    },
+    {
+      "rodada": 19,
+      "pontos": 138.3799,
+      "times": [
+        {
+          "time_id": 13988691,
+          "nome": "Big Head Mengão",
+          "dono": "Flávio Henrique",
+          "pontos": 138.3799
+        }
+      ]
+    },
+    {
+      "rodada": 20,
+      "pontos": 129.5098,
+      "times": [
+        {
+          "time_id": 14773279,
+          "nome": "Bom Vasco F.C.",
+          "dono": "Marcelo B Jagger",
+          "pontos": 129.5098
+        }
+      ]
+    },
+    {
+      "rodada": 21,
+      "pontos": 106.0,
+      "times": [
+        {
+          "time_id": 3624709,
+          "nome": "Hangoover Meus Ovos",
+          "dono": "Arthur",
+          "pontos": 106.0
+        }
+      ]
+    },
+    {
+      "rodada": 22,
+      "pontos": 100.0601,
+      "times": [
+        {
+          "time_id": 25723296,
+          "nome": "FLABRASCHER",
+          "dono": "Rômulo",
+          "pontos": 100.0601
+        }
+      ]
+    },
+    {
+      "rodada": 23,
+      "pontos": 88.4199,
+      "times": [
+        {
+          "time_id": 3624709,
+          "nome": "Hangoover Meus Ovos",
+          "dono": "Arthur",
+          "pontos": 88.4199
+        }
+      ]
+    },
+    {
+      "rodada": 24,
+      "pontos": 138.0703,
+      "times": [
+        {
+          "time_id": 3057019,
+          "nome": "MarkPlay FC",
+          "dono": "Marquinhos",
+          "pontos": 138.0703
+        }
+      ]
+    },
+    {
+      "rodada": 25,
+      "pontos": 119.9302,
+      "times": [
+        {
+          "time_id": 14413433,
+          "nome": "Canucs",
+          "dono": "Marcelo Paz",
+          "pontos": 119.9302
+        }
+      ]
+    },
+    {
+      "rodada": 26,
+      "pontos": 113.9399,
+      "times": [
+        {
+          "time_id": 2055,
+          "nome": "Tricolor Bahia",
+          "dono": "Rodrigo Silva",
+          "pontos": 113.9399
+        }
+      ]
+    },
+    {
+      "rodada": 27,
+      "pontos": 99.96,
+      "times": [
+        {
+          "time_id": 13979075,
+          "nome": "Hysterical Dog",
+          "dono": "Renato",
+          "pontos": 99.96
+        }
+      ]
+    },
+    {
+      "rodada": 28,
+      "pontos": 109.3999,
+      "times": [
+        {
+          "time_id": 14773279,
+          "nome": "Bom Vasco F.C.",
+          "dono": "Marcelo B Jagger",
+          "pontos": 109.3999
+        }
+      ]
+    },
+    {
+      "rodada": 29,
+      "pontos": 138.46,
+      "times": [
+        {
+          "time_id": 8895226,
+          "nome": "CoelhoBsb",
+          "dono": "Michael",
+          "pontos": 138.46
+        }
+      ]
+    },
+    {
+      "rodada": 30,
+      "pontos": 123.1802,
+      "times": [
+        {
+          "time_id": 4822028,
+          "nome": "Rangel Madrid CF",
+          "dono": "Fábio Rangel",
+          "pontos": 123.1802
+        }
+      ]
+    },
+    {
+      "rodada": 31,
+      "pontos": 118.7402,
+      "times": [
+        {
+          "time_id": 4822028,
+          "nome": "Rangel Madrid CF",
+          "dono": "Fábio Rangel",
+          "pontos": 118.7402
+        }
+      ]
+    },
+    {
+      "rodada": 32,
+      "pontos": 104.2598,
+      "times": [
+        {
+          "time_id": 13979075,
+          "nome": "Hysterical Dog",
+          "dono": "Renato",
+          "pontos": 104.2598
+        },
+        {
+          "time_id": 13912141,
+          "nome": "Luigi F.G.C.",
+          "dono": "Luigi",
+          "pontos": 104.2598
+        }
+      ]
+    },
+    {
+      "rodada": 33,
+      "pontos": 117.9302,
+      "times": [
+        {
+          "time_id": 13979075,
+          "nome": "Hysterical Dog",
+          "dono": "Renato",
+          "pontos": 117.9302
+        }
+      ]
+    },
+    {
+      "rodada": 34,
+      "pontos": 119.0698,
+      "times": [
+        {
+          "time_id": 25723296,
+          "nome": "FLABRASCHER",
+          "dono": "Rômulo",
+          "pontos": 119.0698
+        }
+      ]
+    },
+    {
+      "rodada": 35,
+      "pontos": 96.9902,
+      "times": [
+        {
+          "time_id": 3057019,
+          "nome": "MarkPlay FC",
+          "dono": "Marquinhos",
+          "pontos": 96.9902
+        }
+      ]
+    }
+  ]
+}

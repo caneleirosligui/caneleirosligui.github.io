@@ -1,0 +1,159 @@
+{
+  "inscritos": 35,
+  "taxa": 100,
+  "arrecadado": 3500,
+  "total_distribuido": 3500,
+  "rodada_referencia": 35,
+  "itens": [
+    {
+      "id": "geral_1",
+      "label": "1º na classificação geral",
+      "valor": 800,
+      "status": "provisorio",
+      "situacao": "líder no momento",
+      "ganhadores": [
+        {
+          "time_id": 18046434,
+          "nome": "FLASTAR FC",
+          "dono": "Amauri"
+        }
+      ]
+    },
+    {
+      "id": "geral_2",
+      "label": "2º na classificação geral",
+      "valor": 600,
+      "status": "provisorio",
+      "situacao": "líder no momento",
+      "ganhadores": [
+        {
+          "time_id": 3057019,
+          "nome": "MarkPlay FC",
+          "dono": "Marquinhos"
+        }
+      ]
+    },
+    {
+      "id": "geral_3",
+      "label": "3º na classificação geral",
+      "valor": 400,
+      "status": "provisorio",
+      "situacao": "líder no momento",
+      "ganhadores": [
+        {
+          "time_id": 14773279,
+          "nome": "Bom Vasco F.C.",
+          "dono": "Marcelo B Jagger"
+        }
+      ]
+    },
+    {
+      "id": "geral_4",
+      "label": "4º na classificação geral",
+      "valor": 300,
+      "status": "provisorio",
+      "situacao": "líder no momento",
+      "ganhadores": [
+        {
+          "time_id": 3384630,
+          "nome": "MauroGalodoido",
+          "dono": "Mauro"
+        }
+      ]
+    },
+    {
+      "id": "geral_5",
+      "label": "5º na classificação geral",
+      "valor": 200,
+      "status": "provisorio",
+      "situacao": "líder no momento",
+      "ganhadores": [
+        {
+          "time_id": 13979075,
+          "nome": "Hysterical Dog",
+          "dono": "Renato"
+        }
+      ]
+    },
+    {
+      "id": "copa_1",
+      "label": "Copa 1",
+      "valor": 200,
+      "status": "definido",
+      "situacao": "campeão",
+      "ganhadores": [
+        {
+          "time_id": 18046434,
+          "nome": "FLASTAR FC",
+          "dono": "Amauri"
+        }
+      ]
+    },
+    {
+      "id": "copa_2",
+      "label": "Copa 2",
+      "valor": 200,
+      "status": "definido",
+      "situacao": "campeão",
+      "ganhadores": [
+        {
+          "time_id": 222961,
+          "nome": "Bocó H7 FC",
+          "dono": "Hugo"
+        }
+      ]
+    },
+    {
+      "id": "copa_3",
+      "label": "Copa 3",
+      "valor": 200,
+      "status": "definido",
+      "situacao": "campeão",
+      "ganhadores": [
+        {
+          "time_id": 13979075,
+          "nome": "Hysterical Dog",
+          "dono": "Renato"
+        }
+      ]
+    },
+    {
+      "id": "copa_4",
+      "label": "Copa 4",
+      "valor": 200,
+      "status": "em_andamento",
+      "situacao": null,
+      "ganhadores": []
+    },
+    {
+      "id": "maior_pontuacao",
+      "label": "Maior pontuação de uma rodada",
+      "valor": 200,
+      "status": "provisorio",
+      "situacao": "líder no momento",
+      "ganhadores": [
+        {
+          "time_id": 1280429,
+          "nome": "C.R.Fabio1982",
+          "dono": "Fábio",
+          "rodada": 13,
+          "pontos": 145.4902
+        }
+      ]
+    },
+    {
+      "id": "quadro_medalhas",
+      "label": "Quadro de medalhas",
+      "valor": 200,
+      "status": "provisorio",
+      "situacao": "líder no momento",
+      "ganhadores": [
+        {
+          "time_id": 4822028,
+          "nome": "Rangel Madrid CF",
+          "dono": "Fábio Rangel"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "liga_id": 3978835,
+  "liga": "CANELEIROS LIGUI",
+  "temporada": 2026,
+  "rodada_atual": 36,
+  "ultima_rodada_encerrada": 35,
+  "rodada_parcial": null,
+  "rodada_final": 38,
+  "status_mercado": 2,
+  "status_mercado_nome": "fechado",
+  "bola_rolando": false,
+  "atualizado_em": "2026-11-22T18:46:54-03:00",
+  "fonte_api": "https://api.cartola.globo.com",
+  "nota_pontos": "O campo 'pontos' da API já inclui o capitão. O campo 'patrimonio' no endpoint /time/id/{id}/{rodada} é histórico daquela rodada. As rodadas 37 e 38 entram na classificação, nas medalhas e no recorde; as copas terminam na 36."
+}

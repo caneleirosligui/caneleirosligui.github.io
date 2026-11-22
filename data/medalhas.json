@@ -1,0 +1,1273 @@
+{
+  "rodada_referencia": 35,
+  "quadro": [
+    {
+      "posicao": 1,
+      "time_id": 4822028,
+      "nome": "Rangel Madrid CF",
+      "dono": "Fábio Rangel",
+      "ouro": 4,
+      "prata": 1,
+      "bronze": 2,
+      "campeao": true
+    },
+    {
+      "posicao": 2,
+      "time_id": 3057019,
+      "nome": "MarkPlay FC",
+      "dono": "Marquinhos",
+      "ouro": 4,
+      "prata": 1,
+      "bronze": 1,
+      "campeao": false
+    },
+    {
+      "posicao": 3,
+      "time_id": 25723296,
+      "nome": "FLABRASCHER",
+      "dono": "Rômulo",
+      "ouro": 4,
+      "prata": 0,
+      "bronze": 1,
+      "campeao": false
+    },
+    {
+      "posicao": 4,
+      "time_id": 14773279,
+      "nome": "Bom Vasco F.C.",
+      "dono": "Marcelo B Jagger",
+      "ouro": 3,
+      "prata": 2,
+      "bronze": 0,
+      "campeao": false
+    },
+    {
+      "posicao": 5,
+      "time_id": 13979075,
+      "nome": "Hysterical Dog",
+      "dono": "Renato",
+      "ouro": 3,
+      "prata": 0,
+      "bronze": 2,
+      "campeao": false
+    },
+    {
+      "posicao": 6,
+      "time_id": 3624709,
+      "nome": "Hangoover Meus Ovos",
+      "dono": "Arthur",
+      "ouro": 2,
+      "prata": 1,
+      "bronze": 2,
+      "campeao": false
+    },
+    {
+      "posicao": 7,
+      "time_id": 18046434,
+      "nome": "FLASTAR FC",
+      "dono": "Amauri",
+      "ouro": 2,
+      "prata": 1,
+      "bronze": 1,
+      "campeao": false
+    },
+    {
+      "posicao": 8,
+      "time_id": 13988691,
+      "nome": "Big Head Mengão",
+      "dono": "Flávio Henrique",
+      "ouro": 2,
+      "prata": 1,
+      "bronze": 1,
+      "campeao": false
+    },
+    {
+      "posicao": 9,
+      "time_id": 1280429,
+      "nome": "C.R.Fabio1982",
+      "dono": "Fábio",
+      "ouro": 1,
+      "prata": 2,
+      "bronze": 2,
+      "campeao": false
+    },
+    {
+      "posicao": 10,
+      "time_id": 4981831,
+      "nome": "Cruzmaltinus",
+      "dono": "Wilson",
+      "ouro": 1,
+      "prata": 2,
+      "bronze": 2,
+      "campeao": false
+    },
+    {
+      "posicao": 11,
+      "time_id": 25906859,
+      "nome": "Albus SEP Ousado 2",
+      "dono": "Luis Didi",
+      "ouro": 1,
+      "prata": 2,
+      "bronze": 2,
+      "campeao": false
+    },
+    {
+      "posicao": 12,
+      "time_id": 114758,
+      "nome": "CWB - BSB",
+      "dono": "Marcelo Botelho",
+      "ouro": 1,
+      "prata": 2,
+      "bronze": 1,
+      "campeao": false
+    },
+    {
+      "posicao": 13,
+      "time_id": 8895226,
+      "nome": "CoelhoBsb",
+      "dono": "Michael",
+      "ouro": 1,
+      "prata": 1,
+      "bronze": 2,
+      "campeao": false
+    },
+    {
+      "posicao": 14,
+      "time_id": 13912141,
+      "nome": "Luigi F.G.C.",
+      "dono": "Luigi",
+      "ouro": 1,
+      "prata": 1,
+      "bronze": 1,
+      "campeao": false
+    },
+    {
+      "posicao": 15,
+      "time_id": 14413433,
+      "nome": "Canucs",
+      "dono": "Marcelo Paz",
+      "ouro": 1,
+      "prata": 1,
+      "bronze": 0,
+      "campeao": false
+    },
+    {
+      "posicao": 16,
+      "time_id": 13981183,
+      "nome": "FielMetal",
+      "dono": "Rafael Candelária",
+      "ouro": 1,
+      "prata": 0,
+      "bronze": 2,
+      "campeao": false
+    },
+    {
+      "posicao": 17,
+      "time_id": 2055,
+      "nome": "Tricolor Bahia",
+      "dono": "Rodrigo Silva",
+      "ouro": 1,
+      "prata": 0,
+      "bronze": 1,
+      "campeao": false
+    },
+    {
+      "posicao": 18,
+      "time_id": 25544980,
+      "nome": "Flagunner20",
+      "dono": "Tarek",
+      "ouro": 1,
+      "prata": 0,
+      "bronze": 0,
+      "campeao": false
+    },
+    {
+      "posicao": 19,
+      "time_id": 143442,
+      "nome": "Time do Cuné",
+      "dono": "Cuné",
+      "ouro": 1,
+      "prata": 0,
+      "bronze": 0,
+      "campeao": false
+    },
+    {
+      "posicao": 20,
+      "time_id": 1183780,
+      "nome": "RevoredoSC",
+      "dono": "André Revoredo",
+      "ouro": 1,
+      "prata": 0,
+      "bronze": 0,
+      "campeao": false
+    },
+    {
+      "posicao": 21,
+      "time_id": 222961,
+      "nome": "Bocó H7 FC",
+      "dono": "Hugo",
+      "ouro": 0,
+      "prata": 3,
+      "bronze": 1,
+      "campeao": false
+    },
+    {
+      "posicao": 22,
+      "time_id": 14083410,
+      "nome": "Bebasso FC",
+      "dono": "Fábio Rabello",
+      "ouro": 0,
+      "prata": 2,
+      "bronze": 1,
+      "campeao": false
+    },
+    {
+      "posicao": 23,
+      "time_id": 25372106,
+      "nome": "FOX AVENGERS",
+      "dono": "Flávio Abreu",
+      "ouro": 0,
+      "prata": 2,
+      "bronze": 1,
+      "campeao": false
+    },
+    {
+      "posicao": 24,
+      "time_id": 360448,
+      "nome": "RGiovanella FC",
+      "dono": "Rafael Giovanella",
+      "ouro": 0,
+      "prata": 2,
+      "bronze": 1,
+      "campeao": false
+    },
+    {
+      "posicao": 25,
+      "time_id": 28680430,
+      "nome": "Thunderbolt FC",
+      "dono": "Douglas",
+      "ouro": 0,
+      "prata": 1,
+      "bronze": 2,
+      "campeao": false
+    },
+    {
+      "posicao": 26,
+      "time_id": 29274098,
+      "nome": "Digaomd",
+      "dono": "Digão",
+      "ouro": 0,
+      "prata": 1,
+      "bronze": 2,
+      "campeao": false
+    },
+    {
+      "posicao": 27,
+      "time_id": 13944149,
+      "nome": "ALANFEC1918",
+      "dono": "Alan",
+      "ouro": 0,
+      "prata": 1,
+      "bronze": 1,
+      "campeao": false
+    },
+    {
+      "posicao": 28,
+      "time_id": 25384688,
+      "nome": "Taiada na Pelada FC",
+      "dono": "Samuel",
+      "ouro": 0,
+      "prata": 1,
+      "bronze": 1,
+      "campeao": false
+    },
+    {
+      "posicao": 29,
+      "time_id": 1083198,
+      "nome": "Glorious FClube",
+      "dono": "Pedro",
+      "ouro": 0,
+      "prata": 1,
+      "bronze": 1,
+      "campeao": false
+    },
+    {
+      "posicao": 30,
+      "time_id": 3384630,
+      "nome": "MauroGalodoido",
+      "dono": "Mauro",
+      "ouro": 0,
+      "prata": 1,
+      "bronze": 0,
+      "campeao": false
+    },
+    {
+      "posicao": 31,
+      "time_id": 13972242,
+      "nome": "DebCam",
+      "dono": "Valdez",
+      "ouro": 0,
+      "prata": 1,
+      "bronze": 0,
+      "campeao": false
+    },
+    {
+      "posicao": 32,
+      "time_id": 133633,
+      "nome": "Lusa Cruzmaltina J.R",
+      "dono": "Juninho (Raimundo)",
+      "ouro": 0,
+      "prata": 1,
+      "bronze": 0,
+      "campeao": false
+    },
+    {
+      "posicao": 33,
+      "time_id": 216685,
+      "nome": "Tchoucen Tchoucen",
+      "dono": "Sérgio",
+      "ouro": 0,
+      "prata": 0,
+      "bronze": 1,
+      "campeao": false
+    },
+    {
+      "posicao": 34,
+      "time_id": 13981211,
+      "nome": "Pra Desespero da Mulambada",
+      "dono": "Melchior",
+      "ouro": 0,
+      "prata": 0,
+      "bronze": 0,
+      "campeao": false
+    },
+    {
+      "posicao": 35,
+      "time_id": 43438,
+      "nome": "31 de Abril FC",
+      "dono": "Rogério",
+      "ouro": 0,
+      "prata": 0,
+      "bronze": 0,
+      "campeao": false
+    }
+  ],
+  "por_rodada": {
+    "1": {
+      "ouro": [
+        {
+          "time_id": 114758,
+          "nome": "CWB - BSB",
+          "dono": "Marcelo Botelho",
+          "pontos": 81.46
+        }
+      ],
+      "prata": [
+        {
+          "time_id": 14083410,
+          "nome": "Bebasso FC",
+          "dono": "Fábio Rabello",
+          "pontos": 79.7998
+        }
+      ],
+      "bronze": [
+        {
+          "time_id": 25906859,
+          "nome": "Albus SEP Ousado 2",
+          "dono": "Luis Didi",
+          "pontos": 78.96
+        }
+      ]
+    },
+    "2": {
+      "ouro": [
+        {
+          "time_id": 4822028,
+          "nome": "Rangel Madrid CF",
+          "dono": "Fábio Rangel",
+          "pontos": 102.5801
+        }
+      ],
+      "prata": [
+        {
+          "time_id": 8895226,
+          "nome": "CoelhoBsb",
+          "dono": "Michael",
+          "pontos": 100.48
+        }
+      ],
+      "bronze": [
+        {
+          "time_id": 1280429,
+          "nome": "C.R.Fabio1982",
+          "dono": "Fábio",
+          "pontos": 96.8999
+        }
+      ]
+    },
+    "3": {
+      "ouro": [
+        {
+          "time_id": 14773279,
+          "nome": "Bom Vasco F.C.",
+          "dono": "Marcelo B Jagger",
+          "pontos": 113.46
+        }
+      ],
+      "prata": [
+        {
+          "time_id": 114758,
+          "nome": "CWB - BSB",
+          "dono": "Marcelo Botelho",
+          "pontos": 112.3599
+        }
+      ],
+      "bronze": [
+        {
+          "time_id": 28680430,
+          "nome": "Thunderbolt FC",
+          "dono": "Douglas",
+          "pontos": 108.2402
+        }
+      ]
+    },
+    "4": {
+      "ouro": [
+        {
+          "time_id": 25723296,
+          "nome": "FLABRASCHER",
+          "dono": "Rômulo",
+          "pontos": 99.25
+        }
+      ],
+      "prata": [
+        {
+          "time_id": 3384630,
+          "nome": "MauroGalodoido",
+          "dono": "Mauro",
+          "pontos": 98.46
+        }
+      ],
+      "bronze": [
+        {
+          "time_id": 29274098,
+          "nome": "Digaomd",
+          "dono": "Digão",
+          "pontos": 85.5801
+        }
+      ]
+    },
+    "5": {
+      "ouro": [
+        {
+          "time_id": 18046434,
+          "nome": "FLASTAR FC",
+          "dono": "Amauri",
+          "pontos": 108.2002
+        }
+      ],
+      "prata": [
+        {
+          "time_id": 4981831,
+          "nome": "Cruzmaltinus",
+          "dono": "Wilson",
+          "pontos": 104.3198
+        }
+      ],
+      "bronze": [
+        {
+          "time_id": 14083410,
+          "nome": "Bebasso FC",
+          "dono": "Fábio Rabello",
+          "pontos": 98.9399
+        }
+      ]
+    },
+    "6": {
+      "ouro": [
+        {
+          "time_id": 3057019,
+          "nome": "MarkPlay FC",
+          "dono": "Marquinhos",
+          "pontos": 90.0498
+        }
+      ],
+      "prata": [
+        {
+          "time_id": 18046434,
+          "nome": "FLASTAR FC",
+          "dono": "Amauri",
+          "pontos": 83.3901
+        }
+      ],
+      "bronze": [
+        {
+          "time_id": 28680430,
+          "nome": "Thunderbolt FC",
+          "dono": "Douglas",
+          "pontos": 76.71
+        }
+      ]
+    },
+    "7": {
+      "ouro": [
+        {
+          "time_id": 143442,
+          "nome": "Time do Cuné",
+          "dono": "Cuné",
+          "pontos": 84.4102
+        }
+      ],
+      "prata": [
+        {
+          "time_id": 1280429,
+          "nome": "C.R.Fabio1982",
+          "dono": "Fábio",
+          "pontos": 80.9102
+        }
+      ],
+      "bronze": [
+        {
+          "time_id": 4822028,
+          "nome": "Rangel Madrid CF",
+          "dono": "Fábio Rangel",
+          "pontos": 80.6699
+        }
+      ]
+    },
+    "8": {
+      "ouro": [
+        {
+          "time_id": 4981831,
+          "nome": "Cruzmaltinus",
+          "dono": "Wilson",
+          "pontos": 91.6499
+        }
+      ],
+      "prata": [
+        {
+          "time_id": 114758,
+          "nome": "CWB - BSB",
+          "dono": "Marcelo Botelho",
+          "pontos": 89.2998
+        }
+      ],
+      "bronze": [
+        {
+          "time_id": 3057019,
+          "nome": "MarkPlay FC",
+          "dono": "Marquinhos",
+          "pontos": 84.8799
+        }
+      ]
+    },
+    "9": {
+      "ouro": [
+        {
+          "time_id": 25544980,
+          "nome": "Flagunner20",
+          "dono": "Tarek",
+          "pontos": 120.6602
+        }
+      ],
+      "prata": [
+        {
+          "time_id": 25384688,
+          "nome": "Taiada na Pelada FC",
+          "dono": "Samuel",
+          "pontos": 105.4399
+        }
+      ],
+      "bronze": [
+        {
+          "time_id": 1280429,
+          "nome": "C.R.Fabio1982",
+          "dono": "Fábio",
+          "pontos": 100.48
+        }
+      ]
+    },
+    "10": {
+      "ouro": [
+        {
+          "time_id": 13981183,
+          "nome": "FielMetal",
+          "dono": "Rafael Candelária",
+          "pontos": 74.27
+        }
+      ],
+      "prata": [
+        {
+          "time_id": 360448,
+          "nome": "RGiovanella FC",
+          "dono": "Rafael Giovanella",
+          "pontos": 71.98
+        }
+      ],
+      "bronze": [
+        {
+          "time_id": 3624709,
+          "nome": "Hangoover Meus Ovos",
+          "dono": "Arthur",
+          "pontos": 68.27
+        }
+      ]
+    },
+    "11": {
+      "ouro": [
+        {
+          "time_id": 4822028,
+          "nome": "Rangel Madrid CF",
+          "dono": "Fábio Rangel",
+          "pontos": 109.6602
+        }
+      ],
+      "prata": [
+        {
+          "time_id": 222961,
+          "nome": "Bocó H7 FC",
+          "dono": "Hugo",
+          "pontos": 104.7598
+        }
+      ],
+      "bronze": [
+        {
+          "time_id": 2055,
+          "nome": "Tricolor Bahia",
+          "dono": "Rodrigo Silva",
+          "pontos": 104.5601
+        }
+      ]
+    },
+    "12": {
+      "ouro": [
+        {
+          "time_id": 25906859,
+          "nome": "Albus SEP Ousado 2",
+          "dono": "Luis Didi",
+          "pontos": 106.8101
+        }
+      ],
+      "prata": [
+        {
+          "time_id": 14773279,
+          "nome": "Bom Vasco F.C.",
+          "dono": "Marcelo B Jagger",
+          "pontos": 97.8501
+        }
+      ],
+      "bronze": [
+        {
+          "time_id": 1083198,
+          "nome": "Glorious FClube",
+          "dono": "Pedro",
+          "pontos": 94.0498
+        }
+      ]
+    },
+    "13": {
+      "ouro": [
+        {
+          "time_id": 1280429,
+          "nome": "C.R.Fabio1982",
+          "dono": "Fábio",
+          "pontos": 145.4902
+        }
+      ],
+      "prata": [
+        {
+          "time_id": 25372106,
+          "nome": "FOX AVENGERS",
+          "dono": "Flávio Abreu",
+          "pontos": 140.29
+        }
+      ],
+      "bronze": [
+        {
+          "time_id": 13979075,
+          "nome": "Hysterical Dog",
+          "dono": "Renato",
+          "pontos": 138.1904
+        }
+      ]
+    },
+    "14": {
+      "ouro": [
+        {
+          "time_id": 1183780,
+          "nome": "RevoredoSC",
+          "dono": "André Revoredo",
+          "pontos": 79.4502
+        }
+      ],
+      "prata": [
+        {
+          "time_id": 133633,
+          "nome": "Lusa Cruzmaltina J.R",
+          "dono": "Juninho (Raimundo)",
+          "pontos": 73.5698
+        }
+      ],
+      "bronze": [
+        {
+          "time_id": 360448,
+          "nome": "RGiovanella FC",
+          "dono": "Rafael Giovanella",
+          "pontos": 73.4502
+        }
+      ]
+    },
+    "15": {
+      "ouro": [
+        {
+          "time_id": 25723296,
+          "nome": "FLABRASCHER",
+          "dono": "Rômulo",
+          "pontos": 76.9502
+        }
+      ],
+      "prata": [
+        {
+          "time_id": 25906859,
+          "nome": "Albus SEP Ousado 2",
+          "dono": "Luis Didi",
+          "pontos": 73.3301
+        }
+      ],
+      "bronze": [
+        {
+          "time_id": 4981831,
+          "nome": "Cruzmaltinus",
+          "dono": "Wilson",
+          "pontos": 69.0
+        }
+      ]
+    },
+    "16": {
+      "ouro": [
+        {
+          "time_id": 3057019,
+          "nome": "MarkPlay FC",
+          "dono": "Marquinhos",
+          "pontos": 94.3301
+        }
+      ],
+      "prata": [
+        {
+          "time_id": 222961,
+          "nome": "Bocó H7 FC",
+          "dono": "Hugo",
+          "pontos": 92.6802
+        }
+      ],
+      "bronze": [
+        {
+          "time_id": 13981183,
+          "nome": "FielMetal",
+          "dono": "Rafael Candelária",
+          "pontos": 88.98
+        }
+      ]
+    },
+    "17": {
+      "ouro": [
+        {
+          "time_id": 13988691,
+          "nome": "Big Head Mengão",
+          "dono": "Flávio Henrique",
+          "pontos": 101.52
+        }
+      ],
+      "prata": [
+        {
+          "time_id": 13912141,
+          "nome": "Luigi F.G.C.",
+          "dono": "Luigi",
+          "pontos": 90.4199
+        }
+      ],
+      "bronze": [
+        {
+          "time_id": 18046434,
+          "nome": "FLASTAR FC",
+          "dono": "Amauri",
+          "pontos": 89.02
+        }
+      ]
+    },
+    "18": {
+      "ouro": [
+        {
+          "time_id": 18046434,
+          "nome": "FLASTAR FC",
+          "dono": "Amauri",
+          "pontos": 135.9004
+        }
+      ],
+      "prata": [
+        {
+          "time_id": 4822028,
+          "nome": "Rangel Madrid CF",
+          "dono": "Fábio Rangel",
+          "pontos": 129.5996
+        }
+      ],
+      "bronze": [
+        {
+          "time_id": 25723296,
+          "nome": "FLABRASCHER",
+          "dono": "Rômulo",
+          "pontos": 118.1499
+        }
+      ]
+    },
+    "19": {
+      "ouro": [
+        {
+          "time_id": 13988691,
+          "nome": "Big Head Mengão",
+          "dono": "Flávio Henrique",
+          "pontos": 138.3799
+        }
+      ],
+      "prata": [
+        {
+          "time_id": 222961,
+          "nome": "Bocó H7 FC",
+          "dono": "Hugo",
+          "pontos": 137.8799
+        }
+      ],
+      "bronze": [
+        {
+          "time_id": 8895226,
+          "nome": "CoelhoBsb",
+          "dono": "Michael",
+          "pontos": 134.8799
+        }
+      ]
+    },
+    "20": {
+      "ouro": [
+        {
+          "time_id": 14773279,
+          "nome": "Bom Vasco F.C.",
+          "dono": "Marcelo B Jagger",
+          "pontos": 129.5098
+        }
+      ],
+      "prata": [
+        {
+          "time_id": 28680430,
+          "nome": "Thunderbolt FC",
+          "dono": "Douglas",
+          "pontos": 125.4502
+        }
+      ],
+      "bronze": [
+        {
+          "time_id": 29274098,
+          "nome": "Digaomd",
+          "dono": "Digão",
+          "pontos": 123.1099
+        }
+      ]
+    },
+    "21": {
+      "ouro": [
+        {
+          "time_id": 3624709,
+          "nome": "Hangoover Meus Ovos",
+          "dono": "Arthur",
+          "pontos": 106.0
+        }
+      ],
+      "prata": [
+        {
+          "time_id": 13988691,
+          "nome": "Big Head Mengão",
+          "dono": "Flávio Henrique",
+          "pontos": 94.75
+        }
+      ],
+      "bronze": [
+        {
+          "time_id": 13979075,
+          "nome": "Hysterical Dog",
+          "dono": "Renato",
+          "pontos": 90.0498
+        }
+      ]
+    },
+    "22": {
+      "ouro": [
+        {
+          "time_id": 25723296,
+          "nome": "FLABRASCHER",
+          "dono": "Rômulo",
+          "pontos": 100.0601
+        }
+      ],
+      "prata": [
+        {
+          "time_id": 14083410,
+          "nome": "Bebasso FC",
+          "dono": "Fábio Rabello",
+          "pontos": 90.8101
+        }
+      ],
+      "bronze": [
+        {
+          "time_id": 114758,
+          "nome": "CWB - BSB",
+          "dono": "Marcelo Botelho",
+          "pontos": 88.5
+        }
+      ]
+    },
+    "23": {
+      "ouro": [
+        {
+          "time_id": 3624709,
+          "nome": "Hangoover Meus Ovos",
+          "dono": "Arthur",
+          "pontos": 88.4199
+        }
+      ],
+      "prata": [
+        {
+          "time_id": 29274098,
+          "nome": "Digaomd",
+          "dono": "Digão",
+          "pontos": 80.8501
+        }
+      ],
+      "bronze": [
+        {
+          "time_id": 4981831,
+          "nome": "Cruzmaltinus",
+          "dono": "Wilson",
+          "pontos": 80.75
+        }
+      ]
+    },
+    "24": {
+      "ouro": [
+        {
+          "time_id": 3057019,
+          "nome": "MarkPlay FC",
+          "dono": "Marquinhos",
+          "pontos": 138.0703
+        }
+      ],
+      "prata": [
+        {
+          "time_id": 1083198,
+          "nome": "Glorious FClube",
+          "dono": "Pedro",
+          "pontos": 131.4697
+        }
+      ],
+      "bronze": [
+        {
+          "time_id": 4822028,
+          "nome": "Rangel Madrid CF",
+          "dono": "Fábio Rangel",
+          "pontos": 124.77
+        }
+      ]
+    },
+    "25": {
+      "ouro": [
+        {
+          "time_id": 14413433,
+          "nome": "Canucs",
+          "dono": "Marcelo Paz",
+          "pontos": 119.9302
+        }
+      ],
+      "prata": [
+        {
+          "time_id": 3057019,
+          "nome": "MarkPlay FC",
+          "dono": "Marquinhos",
+          "pontos": 108.23
+        }
+      ],
+      "bronze": [
+        {
+          "time_id": 13988691,
+          "nome": "Big Head Mengão",
+          "dono": "Flávio Henrique",
+          "pontos": 107.73
+        }
+      ]
+    },
+    "26": {
+      "ouro": [
+        {
+          "time_id": 2055,
+          "nome": "Tricolor Bahia",
+          "dono": "Rodrigo Silva",
+          "pontos": 113.9399
+        }
+      ],
+      "prata": [
+        {
+          "time_id": 1280429,
+          "nome": "C.R.Fabio1982",
+          "dono": "Fábio",
+          "pontos": 112.4502
+        }
+      ],
+      "bronze": [
+        {
+          "time_id": 25384688,
+          "nome": "Taiada na Pelada FC",
+          "dono": "Samuel",
+          "pontos": 104.54
+        }
+      ]
+    },
+    "27": {
+      "ouro": [
+        {
+          "time_id": 13979075,
+          "nome": "Hysterical Dog",
+          "dono": "Renato",
+          "pontos": 99.96
+        }
+      ],
+      "prata": [
+        {
+          "time_id": 13944149,
+          "nome": "ALANFEC1918",
+          "dono": "Alan",
+          "pontos": 93.8398
+        }
+      ],
+      "bronze": [
+        {
+          "time_id": 216685,
+          "nome": "Tchoucen Tchoucen",
+          "dono": "Sérgio",
+          "pontos": 92.0
+        }
+      ]
+    },
+    "28": {
+      "ouro": [
+        {
+          "time_id": 14773279,
+          "nome": "Bom Vasco F.C.",
+          "dono": "Marcelo B Jagger",
+          "pontos": 109.3999
+        }
+      ],
+      "prata": [
+        {
+          "time_id": 4981831,
+          "nome": "Cruzmaltinus",
+          "dono": "Wilson",
+          "pontos": 106.0698
+        }
+      ],
+      "bronze": [
+        {
+          "time_id": 13944149,
+          "nome": "ALANFEC1918",
+          "dono": "Alan",
+          "pontos": 105.3701
+        }
+      ]
+    },
+    "29": {
+      "ouro": [
+        {
+          "time_id": 8895226,
+          "nome": "CoelhoBsb",
+          "dono": "Michael",
+          "pontos": 138.46
+        }
+      ],
+      "prata": [
+        {
+          "time_id": 25372106,
+          "nome": "FOX AVENGERS",
+          "dono": "Flávio Abreu",
+          "pontos": 130.9297
+        }
+      ],
+      "bronze": [
+        {
+          "time_id": 13981183,
+          "nome": "FielMetal",
+          "dono": "Rafael Candelária",
+          "pontos": 128.9199
+        }
+      ]
+    },
+    "30": {
+      "ouro": [
+        {
+          "time_id": 4822028,
+          "nome": "Rangel Madrid CF",
+          "dono": "Fábio Rangel",
+          "pontos": 123.1802
+        }
+      ],
+      "prata": [
+        {
+          "time_id": 14413433,
+          "nome": "Canucs",
+          "dono": "Marcelo Paz",
+          "pontos": 118.8301
+        }
+      ],
+      "bronze": [
+        {
+          "time_id": 8895226,
+          "nome": "CoelhoBsb",
+          "dono": "Michael",
+          "pontos": 118.7998
+        }
+      ]
+    },
+    "31": {
+      "ouro": [
+        {
+          "time_id": 4822028,
+          "nome": "Rangel Madrid CF",
+          "dono": "Fábio Rangel",
+          "pontos": 118.7402
+        }
+      ],
+      "prata": [
+        {
+          "time_id": 13972242,
+          "nome": "DebCam",
+          "dono": "Valdez",
+          "pontos": 118.6401
+        }
+      ],
+      "bronze": [
+        {
+          "time_id": 13912141,
+          "nome": "Luigi F.G.C.",
+          "dono": "Luigi",
+          "pontos": 105.8398
+        }
+      ]
+    },
+    "32": {
+      "ouro": [
+        {
+          "time_id": 13979075,
+          "nome": "Hysterical Dog",
+          "dono": "Renato",
+          "pontos": 104.2598
+        },
+        {
+          "time_id": 13912141,
+          "nome": "Luigi F.G.C.",
+          "dono": "Luigi",
+          "pontos": 104.2598
+        }
+      ],
+      "prata": [
+        {
+          "time_id": 3624709,
+          "nome": "Hangoover Meus Ovos",
+          "dono": "Arthur",
+          "pontos": 103.1602
+        }
+      ],
+      "bronze": [
+        {
+          "time_id": 25372106,
+          "nome": "FOX AVENGERS",
+          "dono": "Flávio Abreu",
+          "pontos": 102.3599
+        }
+      ]
+    },
+    "33": {
+      "ouro": [
+        {
+          "time_id": 13979075,
+          "nome": "Hysterical Dog",
+          "dono": "Renato",
+          "pontos": 117.9302
+        }
+      ],
+      "prata": [
+        {
+          "time_id": 25906859,
+          "nome": "Albus SEP Ousado 2",
+          "dono": "Luis Didi",
+          "pontos": 113.21
+        }
+      ],
+      "bronze": [
+        {
+          "time_id": 222961,
+          "nome": "Bocó H7 FC",
+          "dono": "Hugo",
+          "pontos": 111.9102
+        }
+      ]
+    },
+    "34": {
+      "ouro": [
+        {
+          "time_id": 25723296,
+          "nome": "FLABRASCHER",
+          "dono": "Rômulo",
+          "pontos": 119.0698
+        }
+      ],
+      "prata": [
+        {
+          "time_id": 14773279,
+          "nome": "Bom Vasco F.C.",
+          "dono": "Marcelo B Jagger",
+          "pontos": 118.0
+        }
+      ],
+      "bronze": [
+        {
+          "time_id": 3624709,
+          "nome": "Hangoover Meus Ovos",
+          "dono": "Arthur",
+          "pontos": 116.3999
+        }
+      ]
+    },
+    "35": {
+      "ouro": [
+        {
+          "time_id": 3057019,
+          "nome": "MarkPlay FC",
+          "dono": "Marquinhos",
+          "pontos": 96.9902
+        }
+      ],
+      "prata": [
+        {
+          "time_id": 360448,
+          "nome": "RGiovanella FC",
+          "dono": "Rafael Giovanella",
+          "pontos": 90.6499
+        }
+      ],
+      "bronze": [
+        {
+          "time_id": 25906859,
+          "nome": "Albus SEP Ousado 2",
+          "dono": "Luis Didi",
+          "pontos": 81.3901
+        }
+      ]
+    }
+  }
+}

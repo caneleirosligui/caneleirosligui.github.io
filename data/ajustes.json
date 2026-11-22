@@ -1,0 +1,12 @@
+{
+  "comentario": "Ajustes manuais opcionais. Com 'ativo: false', vale a regra oficial (empatados dividem a medalha e nenhuma é pulada). Para a R32, a regra oficial dá ouro a Luigi F.G.C. e a Hysterical Dog. Se o organizador quiser o ouro só para o Luigi (como no +0,001 da planilha), troque ativo para true.",
+  "medalhas_por_rodada": {
+    "32": {
+      "ativo": false,
+      "ouro": [13912141],
+      "prata": [13979075],
+      "bronze": [3624709],
+      "comentario": "IDs: Luigi F.G.C. (13912141), Hysterical Dog (13979075), Hangoover Meus Ovos (3624709)."
+    }
+  }
+}

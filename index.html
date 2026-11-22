@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Caneleiros Ligui 2026</title>
+  <meta name="description" content="Classificação, medalhas, copas e premiação da liga Caneleiros Ligui 2026 no Cartola FC.">
+  <meta name="theme-color" content="#102116">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="favicon.png" type="image/png">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <a class="pular" href="#conteudo">Ir para o conteúdo</a>
+  <header class="topo">
+    <div class="topo-inner">
+      <h1>CANELEIROS LIGUI 2026</h1>
+      <p class="meta-linha" id="meta-linha">Carregando dados…</p>
+    </div>
+    <nav class="nav" aria-label="Seções do site">
+      <a href="#inicio" id="nav-inicio" data-nav="inicio">Início</a>
+      <a href="#medalhas" id="nav-medalhas" data-nav="medalhas">Medalhas</a>
+      <div class="nav-copas">
+        <button type="button" id="btn-copas" aria-expanded="false" aria-haspopup="true" aria-controls="menu-copas">Copas</button>
+        <div id="menu-copas" class="menu-copas" hidden>
+          <a href="#copa-1" data-copa="1">Copa 1</a>
+          <a href="#copa-2" data-copa="2">Copa 2</a>
+          <a href="#copa-3" data-copa="3">Copa 3</a>
+          <a href="#copa-4" data-copa="4">Copa 4</a>
+        </div>
+      </div>
+    </nav>
+  </header>
+  <main id="conteudo">
+    <p id="status-msg" class="status-msg" hidden></p>
+    <section id="view-inicio" class="view" hidden></section>
+    <section id="view-medalhas" class="view" hidden></section>
+    <section id="view-copa" class="view" hidden></section>
+  </main>
+  <script src="app.js"></script>
+</body>
+</html>
