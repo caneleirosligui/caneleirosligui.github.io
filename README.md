@@ -11,7 +11,7 @@ A cada rodada, as pontuações vêm da API não oficial do Cartola (`api.cartola
 O GitHub Action `.github/workflows/atualizar.yml`:
 
 - Roda `python scripts/compute.py --fetch` (Python 3 + `requests`, ver `scripts/requirements.txt`).
-- Agenda: a cada 30 minutos de sábado a quarta; uma vez por dia na quinta e na sexta; também pode ser disparado manualmente (`workflow_dispatch`).
+- Agenda: todos os dias, a cada 30 minutos; também pode ser disparado manualmente (`workflow_dispatch`).
 - Só faz commit em `data/` se algum JSON tiver mudado (o script não regrava arquivo cujo conteúdo relevante é o mesmo).
 - Se a API estiver fora do ar ou devolver dados vazios, o script mantém o cache (`data/historico.json`) e não sobrescreve as saídas com resultado vazio.
 
