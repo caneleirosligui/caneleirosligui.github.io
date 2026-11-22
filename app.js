@@ -214,6 +214,14 @@
     for (let r = last; r >= 1; r--) opts.push(`<option value="${r}"${r === ESTADO.rodadaSel ? " selected" : ""}>Rodada ${r}</option>`);
 
     $("view-medalhas").innerHTML = `
+      <h2>Medalhistas da rodada</h2>
+      <div class="seletor-rodada">
+        <button type="button" id="rod-ant" aria-label="Rodada anterior">‹</button>
+        <label class="sr-only" for="sel-rodada">Escolher rodada</label>
+        <select id="sel-rodada" aria-label="Rodada">${opts.join("")}</select>
+        <button type="button" id="rod-prox" aria-label="Próxima rodada">›</button>
+      </div>
+      <div id="medalhistas"></div>
       <h2>Quadro de medalhas</h2>
       <div class="card scroll-x">
         <table class="quadro">
@@ -228,15 +236,7 @@
           </thead>
           <tbody>${rows}</tbody>
         </table>
-      </div>
-      <h2>Medalhistas da rodada</h2>
-      <div class="seletor-rodada">
-        <button type="button" id="rod-ant" aria-label="Rodada anterior">‹</button>
-        <label class="sr-only" for="sel-rodada">Escolher rodada</label>
-        <select id="sel-rodada" aria-label="Rodada">${opts.join("")}</select>
-        <button type="button" id="rod-prox" aria-label="Próxima rodada">›</button>
-      </div>
-      <div id="medalhistas"></div>`;
+      </div>`;
 
     renderMedalhistas(dados, ESTADO.rodadaSel, escudos);
     $("sel-rodada").addEventListener("change", (e) => {
