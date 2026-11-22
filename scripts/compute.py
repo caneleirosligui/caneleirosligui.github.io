@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Calcula classificaÃ§Ã£o, medalhas, copas, maior pontuaÃ§Ã£o e premiaÃ§Ã£o da Caneleiros Ligui.
+"""Calcula classificação, medalhas, copas, maior pontuação e premiação da Caneleiros Ligui.
 
 Pode rodar localmente ou num GitHub Action (Python 3 + requests).
 Grava os JSONs na pasta data/ do site.
@@ -7,7 +7,7 @@ Grava os JSONs na pasta data/ do site.
 Uso:
   python scripts/compute.py           # usa cache se houver; busca rodadas novas
   python scripts/compute.py --fetch   # atualiza na API a rodada atual e as faltantes
-  python scripts/compute.py --offline # sÃ³ cache local, nÃ£o chama a API
+  python scripts/compute.py --offline # só cache local, não chama a API
 """
 
 from __future__ import annotations
@@ -93,7 +93,7 @@ PREMIO_COPA = 200
 PREMIO_MAIOR = 200
 PREMIO_MEDALHAS = 200
 
-# Fase de grupos (5 rodadas) + mata-mata em jogo Ãºnico.
+# Fase de grupos (5 rodadas) + mata-mata em jogo único.
 COPAS = {
     1: {"nome": "Copa 1", "grupos": [1, 2, 3, 4, 5], "oitavas": 6, "quartas": 7, "semi": 8, "final": 9},
     2: {"nome": "Copa 2", "grupos": [10, 11, 12, 13, 14], "oitavas": 15, "quartas": 16, "semi": 17, "final": 18},
@@ -101,10 +101,10 @@ COPAS = {
     4: {"nome": "Copa 4", "grupos": [28, 29, 30, 31, 32], "oitavas": 33, "quartas": 34, "semi": 35, "final": 36},
 }
 
-# Cruzamento extraÃ­do das fÃ³rmulas da planilha (COPA1!C27 em diante; igual nas 4 copas).
-# Oitavas: 1AÃ—4B, 2AÃ—3B, 3AÃ—2B, 4AÃ—1B, 1CÃ—4D, 2CÃ—3D, 3CÃ—2D, 4CÃ—1D.
-# Quartas: vencedores (1Ã—2), (3Ã—4), (5Ã—6), (7Ã—8).
-# Semis: vencedores QF (1Ã—2) lado A/B e (3Ã—4) lado C/D.
+# Cruzamento extraído das fórmulas da planilha (COPA1!C27 em diante; igual nas 4 copas).
+# Oitavas: 1A�4B, 2A�3B, 3A�2B, 4A�1B, 1C�4D, 2C�3D, 3C�2D, 4C�1D.
+# Quartas: vencedores (1�2), (3�4), (5�6), (7�8).
+# Semis: vencedores QF (1�2) lado A/B e (3�4) lado C/D.
 OITAVAS_SEEDS = [
     ("1A", "4B"),
     ("2A", "3B"),
@@ -139,7 +139,7 @@ def almost_eq(a: float | None, b: float | None, tol: float = 0.015) -> bool:
 
 
 def now_sp() -> str:
-    # America/Sao_Paulo = UTC-3 (sem horÃ¡rio de verÃ£o em 2026)
+    # America/Sao_Paulo = UTC-3 (sem horário de verão em 2026)
     return datetime.now(timezone(timedelta(hours=-3))).strftime("%Y-%m-%dT%H:%M:%S-03:00")
 
 
@@ -212,7 +212,7 @@ def needs_refresh(rec: dict | None, rodada: int, rodada_atual: int) -> bool:
     if not rec:
         return True
     # Sempre reconsulta a rodada atual (pode ganhar pontos parciais) e a anterior
-    # (correÃ§Ã£o oficial tardia).
+    # (correção oficial tardia).
     if rodada >= max(1, rodada_atual - 1):
         return True
     if rec.get("pontos") is None:
@@ -226,18 +226,18 @@ def payload_ok(payload: dict, tid: int) -> bool:
     time_info = payload.get("time") or {}
     if time_info.get("time_id") not in (None, tid) and int(time_info.get("time_id") or 0) != int(tid):
         return False
-    # Resposta vazia ou de erro, sem pontuaÃ§Ã£o e sem elenco
+    # Resposta vazia ou de erro, sem pontuação e sem elenco
     if payload.get("pontos") is None and not payload.get("atletas") and payload.get("pontos_campeonato") is None:
         return False
     return True
 
 
 def fetch_into(slim: dict, teams: list[dict], force_all: bool = False) -> dict:
-    """Atualiza o slim. Em falha, levanta FetchError e nÃ£o devolve um slim esvaziado."""
+    """Atualiza o slim. Em falha, levanta FetchError e não devolve um slim esvaziado."""
     try:
         status = fetch_status()
     except Exception as exc:  # noqa: BLE001
-        raise FetchError(f"mercado/status indisponÃ­vel: {exc}") from exc
+        raise FetchError(f"mercado/status indisponível: {exc}") from exc
     if not status or not status.get("rodada_atual"):
         raise FetchError("mercado/status veio vazio ou sem rodada_atual")
 
@@ -254,9 +254,9 @@ def fetch_into(slim: dict, teams: list[dict], force_all: bool = False) -> dict:
     }
     rodada_atual = int(mercado["rodada_atual"] or 0)
     if rodada_atual < 1:
-        raise FetchError(f"rodada_atual invÃ¡lida: {rodada_atual}")
+        raise FetchError(f"rodada_atual inválida: {rodada_atual}")
 
-    # Trabalha numa cÃ³pia; o cache original sÃ³ Ã© trocado no sucesso.
+    # Trabalha numa cópia; o cache original só é trocado no sucesso.
     import copy
     work = copy.deepcopy(slim) if slim.get("times") else empty_slim()
     work["mercado"] = mercado
@@ -279,7 +279,7 @@ def fetch_into(slim: dict, teams: list[dict], force_all: bool = False) -> dict:
         try:
             payload = http_get(f"{API_BASE}/time/id/{tid}/{rod}")
             if not payload_ok(payload, tid):
-                failed.append(f"{tid}/R{rod} (resposta invÃ¡lida)")
+                failed.append(f"{tid}/R{rod} (resposta inválida)")
                 continue
             work["times"][str(tid)][str(rod)] = slim_from_payload(payload, rod)
             updated += 1
@@ -288,15 +288,15 @@ def fetch_into(slim: dict, teams: list[dict], force_all: bool = False) -> dict:
         if i == total or i % 35 == 0:
             print(f"  {i}/{total} ok={updated} falhas={len(failed)}")
 
-    # NÃ£o grava se a coleta veio vazia ou perdeu times demais
+    # Não grava se a coleta veio vazia ou perdeu times demais
     if total and updated == 0:
         raise FetchError("nenhuma rodada foi atualizada; API parece fora do ar")
     if total and len(failed) > max(3, total // 5):
         raise FetchError(f"muitas falhas na API ({len(failed)}/{total}); cache preservado")
-    # Todo time precisa ter ao menos a Ãºltima rodada encerrada anterior no cache
+    # Todo time precisa ter ao menos a última rodada encerrada anterior no cache
     missing_teams = [t["nome"] for t in teams if not work["times"].get(str(t["time_id"]))]
     if missing_teams:
-        raise FetchError(f"times ausentes apÃ³s a coleta: {', '.join(missing_teams)}")
+        raise FetchError(f"times ausentes após a coleta: {', '.join(missing_teams)}")
     if failed:
         print(f"avisos de coleta ({len(failed)}), usando cache no que faltou: {failed[:8]}", file=sys.stderr)
     return work
@@ -313,7 +313,7 @@ def load_inputs(fetch: bool = False, offline: bool = False, force_all: bool = Fa
     cached = bool(slim.get("times"))
     if offline:
         if not cached:
-            raise SystemExit("Modo --offline, mas nÃ£o hÃ¡ historico.json nem data/raw/slim.json.")
+            raise SystemExit("Modo --offline, mas não há historico.json nem data/raw/slim.json.")
     elif fetch or os.environ.get("GITHUB_ACTIONS") == "true" or not cached:
         try:
             slim = fetch_into(slim, teams, force_all=force_all)
@@ -326,10 +326,10 @@ def load_inputs(fetch: bool = False, offline: bool = False, force_all: bool = Fa
                 except OSError:
                     pass
         except FetchError as exc:
-            print(f"API indisponÃ­vel ou incompleta: {exc}", file=sys.stderr)
+            print(f"API indisponível ou incompleta: {exc}", file=sys.stderr)
             if not cached:
                 raise SystemExit(f"Sem cache local e a API falhou: {exc}")
-            print("Mantendo os dados em cache; nenhum JSON de saÃ­da serÃ¡ esvaziado.", file=sys.stderr)
+            print("Mantendo os dados em cache; nenhum JSON de saída será esvaziado.", file=sys.stderr)
     mercado = slim.get("mercado") or {}
     return teams, grupos, slim, mercado
 
@@ -353,7 +353,7 @@ def scored_rounds(slim: dict, teams: list[dict], mercado: dict) -> tuple[int, in
             n_present += 1
             if rec.get("n_atletas_com_pontos", 0) > 0:
                 n_with += 1
-            # pontos_campeonato nÃ£o avanÃ§a e atletas zerados => rodada ainda nÃ£o pontuada
+            # pontos_campeonato não avança e atletas zerados => rodada ainda não pontuada
             if rod > 1:
                 prev = times.get(str(t["time_id"]), {}).get(str(rod - 1))
                 if prev and almost_eq(rec.get("pontos_campeonato"), prev.get("pontos_campeonato"), 1e-6):
@@ -363,12 +363,12 @@ def scored_rounds(slim: dict, teams: list[dict], mercado: dict) -> tuple[int, in
             if rod < rodada_atual or n_with == n_present:
                 last = rod
             else:
-                # alguns times jÃ¡ com pontos na rodada em andamento
+                # alguns times já com pontos na rodada em andamento
                 parcial = rod
                 last = rod - 1 if last == rod - 1 or last == 0 else last
         elif rod < rodada_atual and n_present:
             # rodada passada deveria estar encerrada; se veio vazia, ainda assim conta se pontos existe
-            # (histÃ³rico Ã s vezes nÃ£o traz atletas com pontos, mas traz o campo pontos)
+            # (histórico às vezes não traz atletas com pontos, mas traz o campo pontos)
             n_pts = 0
             for t in teams:
                 rec = times.get(str(t["time_id"]), {}).get(str(rod))
@@ -377,7 +377,7 @@ def scored_rounds(slim: dict, teams: list[dict], mercado: dict) -> tuple[int, in
             if n_pts >= n_present * 0.9:
                 last = rod
         elif rod == rodada_atual and stale >= n_present * 0.9:
-            # rodada atual ainda sem pontuaÃ§Ã£o (campo pontos pode estar sujo com a rodada anterior)
+            # rodada atual ainda sem pontuação (campo pontos pode estar sujo com a rodada anterior)
             pass
     if last == 0 and rodada_atual:
         last = max(0, rodada_atual - 1)
@@ -418,7 +418,7 @@ def sum_points(slim: dict, time_id: int, rounds: list[int]) -> float:
 
 
 def standing_key_at(slim: dict, time_id: int, rodada: int) -> tuple:
-    """Chave de desempate da classificaÃ§Ã£o geral no momento da rodada (maior Ã© melhor)."""
+    """Chave de desempate da classificação geral no momento da rodada (maior é melhor)."""
     pts = pontos_campeonato_of(slim, time_id, rodada)
     if pts is None:
         pts = sum_points(slim, time_id, list(range(1, rodada + 1)))
@@ -483,7 +483,7 @@ def load_ajustes() -> dict:
                 if isinstance(data, dict):
                     return data
             except Exception as exc:  # noqa: BLE001
-                print(f"avisos: nÃ£o li {path}: {exc}", file=sys.stderr)
+                print(f"avisos: não li {path}: {exc}", file=sys.stderr)
     return {}
 
 
@@ -499,7 +499,7 @@ def _lookup_team(teams: list[dict], ref: Any) -> dict | None:
 
 
 def apply_ajuste_medalhas(oficial: dict, teams: list[dict], slim: dict, rodada: int, ajustes: dict) -> dict:
-    """Se o ajuste da rodada estiver ativo, substitui ouro/prata/bronze. SenÃ£o, regra oficial."""
+    """Se o ajuste da rodada estiver ativo, substitui ouro/prata/bronze. Senão, regra oficial."""
     bloco = (ajustes.get("medalhas_por_rodada") or {}).get(str(rodada)) or (ajustes.get("medalhas_por_rodada") or {}).get(rodada)
     if not bloco or not bloco.get("ativo"):
         return oficial
@@ -511,7 +511,7 @@ def apply_ajuste_medalhas(oficial: dict, teams: list[dict], slim: dict, rodada: 
         for ref in refs or []:
             t = _lookup_team(teams, ref)
             if not t:
-                print(f"ajuste R{rodada}: time nÃ£o encontrado ({ref})", file=sys.stderr)
+                print(f"ajuste R{rodada}: time não encontrado ({ref})", file=sys.stderr)
                 continue
             p = points_of(slim, t["time_id"], rodada)
             itens.append({"time_id": t["time_id"], "nome": t["nome"], "dono": t["dono"], "pontos": r2(p) if p is not None else None})
@@ -531,7 +531,7 @@ def medals_for_round(teams: list[dict], slim: dict, rodada: int, ajustes: dict |
             continue
         scored.append({"time_id": t["time_id"], "nome": t["nome"], "dono": t["dono"], "pontos": r2(p), "pontos_raw": p})
     scored.sort(key=lambda x: -x["pontos_raw"])
-    # Agrupa por pontuaÃ§Ã£o exata (tolerÃ¢ncia pequena para ruÃ­do binÃ¡rio)
+    # Agrupa por pontuação exata (tolerância pequena para ruído binário)
     clusters: list[list[dict]] = []
     for item in scored:
         if not clusters or abs(clusters[-1][0]["pontos_raw"] - item["pontos_raw"]) > 1e-6:
@@ -631,7 +631,7 @@ def cup_group_tables(teams_by_name: dict, names: dict[str, list[str]], slim: dic
                 "patrimonio": r2(key[1]),
                 "pontos_por_rodada": por,
             })
-        # Desempate oficial: melhor posiÃ§Ã£o na geral no momento (pts gerais, depois cartoletas)
+        # Desempate oficial: melhor posição na geral no momento (pts gerais, depois cartoletas)
         rows.sort(key=lambda x: (-x["pontos_raw"], -(x["classificacao_geral_pts"] or 0), -(x["patrimonio"] or 0), x["nome"].lower()))
         ranked = []
         for i, row in enumerate(rows, 1):
@@ -663,7 +663,7 @@ def pick_seed(ranked_by_group: dict, seed: str) -> dict | None:
 
 
 def winner_of(a: dict, b: dict, slim: dict, rodada: int) -> tuple[dict, str | None]:
-    """Vencedor de um jogo Ãºnico. Desempate: melhor classificaÃ§Ã£o geral no momento, depois cartoletas."""
+    """Vencedor de um jogo único. Desempate: melhor classificação geral no momento, depois cartoletas."""
     pa = points_of(slim, a["time_id"], rodada)
     pb = points_of(slim, b["time_id"], rodada)
     a2 = {**a, "pontos": r2(pa)}
@@ -808,10 +808,10 @@ def build_premiacao(classificacao: list[dict], copas: list[dict], maior: dict, q
         row = classificacao[pos - 1]
         itens.append({
             "id": f"geral_{pos}",
-            "label": f"{pos}Âº na classificaÃ§Ã£o geral",
+            "label": f"{pos}º na classificação geral",
             "valor": valor,
             "status": "definido" if last >= rodada_final else "provisorio",
-            "situacao": "campeÃ£o" if last >= rodada_final else "lÃ­der no momento",
+            "situacao": "campeão" if last >= rodada_final else "líder no momento",
             "ganhadores": [{"time_id": row["time_id"], "nome": row["nome"], "dono": row["dono"]}],
         })
     for copa in copas:
@@ -821,20 +821,20 @@ def build_premiacao(classificacao: list[dict], copas: list[dict], maior: dict, q
             "label": copa["nome"],
             "valor": PREMIO_COPA,
             "status": "definido" if campeao else "em_andamento" if copa["fase"] != "nao_iniciada" else "pendente",
-            "situacao": "campeÃ£o" if campeao else None,
+            "situacao": "campeão" if campeao else None,
             "ganhadores": [campeao] if campeao else [],
         })
     itens.append({
         "id": "maior_pontuacao",
-        "label": "Maior pontuaÃ§Ã£o de uma rodada",
+        "label": "Maior pontuação de uma rodada",
         "valor": PREMIO_MAIOR,
         "status": "provisorio" if last < rodada_final else "definido",
-        "situacao": "campeÃ£o" if last >= rodada_final else "lÃ­der no momento",
+        "situacao": "campeão" if last >= rodada_final else "líder no momento",
         "ganhadores": [
             {"time_id": v["time_id"], "nome": v["nome"], "dono": v["dono"], "rodada": v["rodada"], "pontos": v["pontos"]}
             for v in maior["vencedores"]
         ],
-        "observacao": "HÃ¡ empate na maior pontuaÃ§Ã£o; o regulamento prevÃª sorteio se nenhum outro critÃ©rio resolver." if maior.get("empate") else None,
+        "observacao": "Há empate na maior pontuação; o regulamento prevê sorteio se nenhum outro critério resolver." if maior.get("empate") else None,
     })
     lideres = [q for q in quadro if q["posicao"] == 1]
     itens.append({
@@ -842,7 +842,7 @@ def build_premiacao(classificacao: list[dict], copas: list[dict], maior: dict, q
         "label": "Quadro de medalhas",
         "valor": PREMIO_MEDALHAS,
         "status": "provisorio" if last < rodada_final else "definido",
-        "situacao": "campeÃ£o" if last >= rodada_final else "lÃ­der no momento",
+        "situacao": "campeão" if last >= rodada_final else "líder no momento",
         "ganhadores": [{"time_id": q["time_id"], "nome": q["nome"], "dono": q["dono"]} for q in lideres],
     })
     for it in itens:
@@ -863,7 +863,7 @@ def team_index(teams: list[dict]) -> dict[str, dict]:
 
 
 def strip_volatile(obj: Any) -> Any:
-    """Remove campos que mudam sÃ³ de relÃ³gio, para decidir se vale gravar/commitar."""
+    """Remove campos que mudam só de relógio, para decidir se vale gravar/commitar."""
     if isinstance(obj, dict):
         return {k: strip_volatile(v) for k, v in obj.items() if k not in {"atualizado_em"}}
     if isinstance(obj, list):
@@ -885,8 +885,8 @@ def dump_if_changed(path: Path, obj: Any) -> bool:
 
 def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     p = argparse.ArgumentParser(description="Atualiza os JSONs da Caneleiros Ligui.")
-    p.add_argument("--fetch", action="store_true", help="consulta a API (padrÃ£o no GitHub Action)")
-    p.add_argument("--offline", action="store_true", help="nÃ£o chama a API; usa sÃ³ o cache")
+    p.add_argument("--fetch", action="store_true", help="consulta a API (padrão no GitHub Action)")
+    p.add_argument("--offline", action="store_true", help="não chama a API; usa só o cache")
     p.add_argument("--fetch-all", action="store_true", help="baixa de novo todas as rodadas")
     return p.parse_args(argv)
 
@@ -897,14 +897,14 @@ def main(argv: list[str] | None = None) -> None:
     fetch = bool(args.fetch or args.fetch_all or os.environ.get("GITHUB_ACTIONS") == "true")
     if offline:
         fetch = False
-    # Local com cache completo: nÃ£o precisa ir Ã  API, a menos que peÃ§am --fetch.
+    # Local com cache completo: não precisa ir à API, a menos que peçam --fetch.
     if not fetch and not offline and not load_cached_slim().get("times") and not (RAW / "slim.json").exists() and not PATHS["historico"].exists():
         fetch = True
     teams, grupos, slim, mercado = load_inputs(fetch=fetch, offline=offline, force_all=bool(args.fetch_all))
     rodada_atual, last, parcial = scored_rounds(slim, teams, mercado)
     rodada_final = int(mercado.get("rodada_final") or 38)
-    # Medalhas, recorde e copas usam sÃ³ rodadas encerradas (copas vÃ£o atÃ© a 36).
-    # ClassificaÃ§Ã£o: se a rodada atual jÃ¡ tem pontos parciais, soma esses pontos e marca parcial.
+    # Medalhas, recorde e copas usam só rodadas encerradas (copas vão até a 36).
+    # Classificação: se a rodada atual já tem pontos parciais, soma esses pontos e marca parcial.
     if parcial and last:
         classificacao = classify(teams, slim, last)
         # Recalcula totais com a rodada em andamento, sem tratar como encerrada.
@@ -950,7 +950,7 @@ def main(argv: list[str] | None = None) -> None:
 
     premiacao = build_premiacao(classificacao, copas, maior, quadro, last, rodada_final=rodada_final)
 
-    # HistÃ³rico slim (pontos/patrimÃ´nio por rodada) versionado junto com o site.
+    # Histórico slim (pontos/patrimônio por rodada) versionado junto com o site.
     PATHS["historico"].parent.mkdir(parents=True, exist_ok=True)
     dump_json(PATHS["historico"], slim)
 
@@ -968,7 +968,7 @@ def main(argv: list[str] | None = None) -> None:
         "bola_rolando": mercado.get("bola_rolando"),
         "atualizado_em": now_sp(),
         "fonte_api": "https://api.cartola.globo.com",
-        "nota_pontos": "O campo 'pontos' da API jÃ¡ inclui o capitÃ£o. O campo 'patrimonio' no endpoint /time/id/{id}/{rodada} Ã© histÃ³rico daquela rodada. As rodadas 37 e 38 entram na classificaÃ§Ã£o, nas medalhas e no recorde; as copas terminam na 36.",
+        "nota_pontos": "O campo 'pontos' da API já inclui o capitão. O campo 'patrimonio' no endpoint /time/id/{id}/{rodada} é histórico daquela rodada. As rodadas 37 e 38 entram na classificação, nas medalhas e no recorde; as copas terminam na 36.",
     }
 
     OUT.mkdir(parents=True, exist_ok=True)
@@ -1002,20 +1002,20 @@ def main(argv: list[str] | None = None) -> None:
     for name, obj in outputs.items():
         if dump_if_changed(OUT / name, obj):
             changed.append(name)
-    # HistÃ³rico slim: sÃ³ grava de novo se o conteÃºdo (sem mercado volÃ¡til demais) jÃ¡ foi
+    # Histórico slim: só grava de novo se o conteúdo (sem mercado volátil demais) já foi
     # persistido no fetch; aqui regrava para o layout local do site.
     if PATHS["historico"].parent.exists():
         dump_if_changed(PATHS["historico"], slim)
     if not changed:
-        print(f"sem mudanÃ§as em {OUT}  (encerrada=R{last}, atual=R{rodada_atual}, parcial={parcial})")
+        print(f"sem mudanças em {OUT}  (encerrada=R{last}, atual=R{rodada_atual}, parcial={parcial})")
     else:
         print(f"atualizado em {OUT} ({', '.join(changed)})  (encerrada=R{last}, atual=R{rodada_atual}, parcial={parcial})")
-    print("lÃ­der:", classificacao[0]["nome"], classificacao[0]["pontos"])
+    print("líder:", classificacao[0]["nome"], classificacao[0]["pontos"])
     print("top5:", ", ".join(f"{r['posicao']}.{r['nome']}" for r in classificacao[:5]))
     print("medalhas:", ", ".join(f"{q['nome']} {q['ouro']}O/{q['prata']}P/{q['bronze']}B" for q in quadro[:5]))
     if maior["vencedores"]:
         v = maior["vencedores"][0]
-        print("maior pontuaÃ§Ã£o:", v["pontos"], "R" + str(v["rodada"]), v["nome"])
+        print("maior pontuação:", v["pontos"], "R" + str(v["rodada"]), v["nome"])
     for c in copas:
         camp = c["mata_mata"].get("campeao")
         print(f"{c['nome']} fase={c['fase']} campeao={camp['nome'] if camp else '-'}")
