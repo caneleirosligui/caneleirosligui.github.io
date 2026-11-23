@@ -428,3 +428,57 @@ h3 {
 .scroll-x { overflow-x: auto; }
 
 .sr-only { position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0; }
+
+/* Parciais */
+.nav > a,
+.nav-copas > button {
+  font-size: 0.86rem;
+}
+.nota-parciais {
+  margin: 0 0 0.85rem;
+  color: var(--muted);
+  font-size: 0.88rem;
+}
+.nota-parciais p { margin: 0 0 0.35rem; }
+.nota-parciais p:last-child { margin-bottom: 0; }
+.lista-parciais { list-style: none; margin: 0; padding: 0; }
+.lista-parciais li {
+  display: grid;
+  grid-template-columns: 1.7rem 2.1rem 1fr auto;
+  gap: 0.45rem 0.5rem;
+  align-items: center;
+  padding: 0.55rem 0.5rem;
+  border-bottom: 1px solid var(--line);
+}
+.lista-parciais li:last-child { border-bottom: 0; }
+.lista-parciais .meta-pts {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.1rem;
+}
+.jogados {
+  color: var(--muted);
+  font-size: 0.72rem;
+  font-variant-numeric: tabular-nums;
+  font-weight: 500;
+}
+.lista-geral-parcial li {
+  grid-template-columns: 1.7rem 2.3rem 2.1rem 1fr auto;
+}
+.variacao {
+  font-variant-numeric: tabular-nums;
+  font-weight: 750;
+  font-size: 0.78rem;
+  text-align: center;
+  white-space: nowrap;
+}
+.var-sobe { color: var(--win); }
+.var-desce { color: var(--danger); }
+.var-igual { color: var(--muted); }
+.pts-sub {
+  display: block;
+  color: var(--muted);
+  font-size: 0.72rem;
+  font-weight: 500;
+}

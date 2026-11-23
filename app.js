@@ -61,6 +61,26 @@
     return `${parts.day}/${parts.month}/${parts.year} às ${parts.hour}:${parts.minute}`;
   }
 
+  function fmtHora(iso) {
+    if (!iso) return "";
+    const d = new Date(iso);
+    if (Number.isNaN(d.getTime())) return "";
+    const fmt = new Intl.DateTimeFormat("pt-BR", {
+      timeZone: "America/Sao_Paulo",
+      hour: "2-digit",
+      minute: "2-digit",
+      hour12: false,
+    });
+    return fmt.format(d);
+  }
+
+  function rotuloVariacao(n) {
+    if (!n) return { cls: "var-igual", txt: "=", label: "sem mudança de posição" };
+    if (n > 0) return { cls: "var-sobe", txt: "↑" + n, label: "subiu " + n + (n === 1 ? " posição" : " posições") };
+    const d = Math.abs(n);
+    return { cls: "var-desce", txt: "↓" + d, label: "caiu " + d + (d === 1 ? " posição" : " posições") };
+  }
+
   function fmtIntervaloRodadas(arr) {
     if (!arr || !arr.length) return "—";
     if (arr.length === 1) return String(arr[0]);
@@ -82,6 +102,7 @@
     const h = (location.hash || "#inicio").replace(/^#/, "").toLowerCase();
     if (!h || h === "inicio" || h === "home") return { view: "inicio" };
     if (h === "medalhas") return { view: "medalhas" };
+    if (h === "parciais") return { view: "parciais" };
     const m = h.match(/^copa-([1-4])$/);
     if (m) return { view: "copa", n: Number(m[1]) };
     return { view: "inicio" };
@@ -90,7 +111,8 @@
   function setNav(rota) {
     document.querySelectorAll(".nav > a").forEach((a) => {
       const on = (rota.view === "inicio" && a.dataset.nav === "inicio") ||
-        (rota.view === "medalhas" && a.dataset.nav === "medalhas");
+        (rota.view === "medalhas" && a.dataset.nav === "medalhas") ||
+        (rota.view === "parciais" && a.dataset.nav === "parciais");
       if (on) a.setAttribute("aria-current", "page");
       else a.removeAttribute("aria-current");
     });
@@ -368,6 +390,65 @@
     return `<article class="jogo"><div class="jogo-meta">${esc(meta)}</div>${lado2(j.a, j.vencedor_id)}${lado2(j.b, j.vencedor_id)}${nota}</article>`;
   }
 
+
+  function renderParciais(dados, parciais) {
+    const dest = $("view-parciais");
+    if (!parciais || !Array.isArray(parciais.times)) {
+      dest.innerHTML = "<h2>Parciais</h2><p>Não foi possível carregar as parciais.</p>";
+      return;
+    }
+    const escudos = escudosPorTime(dados);
+    const hora = fmtHora(parciais.atualizado_em);
+    const quando = hora ? `Atualizado às ${hora} (Brasília).` : "";
+    const intervalo = "As parciais são atualizadas a cada 30 minutos.";
+    const nota = parciais.em_andamento ? (parciais.nota || "") : "";
+    const linhasInfo = [
+      parciais.mensagem || "",
+      parciais.texto_jogos || "",
+      quando,
+      intervalo,
+      nota,
+    ].filter(Boolean).map((t) => `<p>${esc(t)}</p>`).join("");
+
+    const porRodada = (parciais.times || []).slice().sort((a, b) => (a.posicao_rodada || 99) - (b.posicao_rodada || 99));
+    const lisRodada = porRodada.map((t) => {
+      const total = t.atletas_total || 12;
+      return `<li>
+        <span class="pos">${t.posicao_rodada}º</span>
+        ${escudo(t.escudo || escudos[t.time_id], t.nome)}
+        <span><span class="time-nome">${esc(t.nome)}</span><span class="time-dono"><br>${esc(t.dono || "")}</span></span>
+        <span class="meta-pts"><span class="pts-cell">${fmtPts(t.pontos_parcial)}</span><span class="jogados">${t.atletas_jogados}/${total} jogadores</span></span>
+      </li>`;
+    }).join("");
+
+    const porGeral = (parciais.times || []).slice().sort((a, b) => (a.posicao_parcial || 99) - (b.posicao_parcial || 99));
+    const lisGeral = porGeral.map((t) => {
+      const zona = t.zona_premiacao ? " zona" : "";
+      const v = rotuloVariacao(parciais.em_andamento ? t.variacao : 0);
+      return `<li class="${zona.trim()}">
+        <span class="pos">${t.posicao_parcial}º</span>
+        <span class="variacao ${v.cls}" title="${esc(v.label)}" aria-label="${esc(v.label)}">${v.txt}</span>
+        ${escudo(t.escudo || escudos[t.time_id], t.nome)}
+        <span><span class="time-nome">${esc(t.nome)}</span><span class="time-dono"><br>${esc(t.dono || "")}</span></span>
+        <span class="meta-pts"><span class="pts-cell">${fmtPts(t.total_geral_parcial)}</span><span class="pts-sub">rodada ${fmtPts(t.pontos_parcial)}</span></span>
+      </li>`;
+    }).join("");
+
+    const tituloRodada = parciais.em_andamento
+      ? `Pontos da rodada ${esc(parciais.rodada)}`
+      : `Pontos da rodada ${esc(parciais.rodada)}`;
+    const tituloGeral = parciais.em_andamento ? "Classificação parcial" : "Classificação geral";
+
+    dest.innerHTML = `
+      <h2>Parciais</h2>
+      <div class="nota-parciais">${linhasInfo}</div>
+      <h3>${tituloRodada}</h3>
+      <ol class="lista-parciais lista-classif card">${lisRodada}</ol>
+      <h3>${tituloGeral}</h3>
+      <ol class="lista-parciais lista-geral-parcial lista-classif card">${lisGeral}</ol>
+    `;
+  }
+
   function atualizarMenuCopas(dados) {
     (dados.copas || []).forEach((c) => {
       const a = document.querySelector(`#menu-copas a[data-copa="${c.id}"]`);
@@ -383,9 +464,11 @@
     $("view-inicio").hidden = rota.view !== "inicio";
     $("view-medalhas").hidden = rota.view !== "medalhas";
     $("view-copa").hidden = rota.view !== "copa";
+    $("view-parciais").hidden = rota.view !== "parciais";
     if (rota.view === "inicio") renderInicio(ESTADO.dados);
     if (rota.view === "medalhas") renderMedalhas(ESTADO.dados);
     if (rota.view === "copa") renderCopa(ESTADO.dados, rota.n);
+    if (rota.view === "parciais") renderParciais(ESTADO.dados, ESTADO.parciais);
     fecharMenu();
     window.scrollTo(0, 0);
   }
@@ -431,6 +514,13 @@
       falha("Não foi possível carregar os dados da liga.");
       console.error(err);
       return;
+    }
+    try {
+      const respP = await fetch("data/parciais.json", { cache: "no-cache" });
+      ESTADO.parciais = respP.ok ? await respP.json() : null;
+    } catch (err) {
+      ESTADO.parciais = null;
+      console.error(err);
     }
     renderMeta(ESTADO.dados);
     atualizarMenuCopas(ESTADO.dados);
