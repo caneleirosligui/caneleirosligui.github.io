@@ -3,8 +3,8 @@ name: Atualizar pontuações da liga
 on:
   workflow_dispatch:
   schedule:
-    # Todos os dias, a cada 30 minutos (UTC).
-    - cron: "*/30 * * * *"
+    # A cada 10 minutos; o script só publica quando há jogo ou resultado novo.
+    - cron: "*/10 * * * *"
 
 permissions:
   contents: write
