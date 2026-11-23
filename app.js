@@ -400,7 +400,7 @@
     const escudos = escudosPorTime(dados);
     const hora = fmtHora(parciais.atualizado_em);
     const quando = hora ? `Atualizado às ${hora} (Brasília).` : "";
-    const intervalo = "As parciais são atualizadas a cada 30 minutos.";
+    const intervalo = "As parciais são atualizadas a cada 10 minutos durante os jogos.";
     const nota = parciais.em_andamento ? (parciais.nota || "") : "";
     const linhasInfo = [
       parciais.mensagem || "",
