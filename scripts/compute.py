@@ -948,26 +948,204 @@ def texto_jogos(jogos: dict) -> str:
     return extra.strip()
 
 
-def pontos_do_elenco(elenco: list, capitao_id: int | None, pontuados: dict) -> tuple[float, int, int]:
-    """Soma a parcial dos titulares. Capitão em 1,5×. Só conta quem entrou em campo."""
+def lista_reservas(payload: dict | None) -> list[dict]:
+    """Normaliza o banco (lista ou dict por posição) de /time/id/{id}/{rodada}."""
+    if not payload:
+        return []
+    raw = payload.get("reservas")
+    if not raw:
+        return []
+    if isinstance(raw, list):
+        return [a for a in raw if isinstance(a, dict) and a.get("atleta_id") is not None]
+    if isinstance(raw, dict):
+        out: list[dict] = []
+        for v in raw.values():
+            if isinstance(v, dict) and v.get("atleta_id") is not None:
+                out.append(v)
+            elif isinstance(v, list):
+                out.extend(a for a in v if isinstance(a, dict) and a.get("atleta_id") is not None)
+        return out
+    return []
+
+
+def indice_jogos_por_clube(partidas_payload: dict | None) -> dict[int, dict]:
+    """clube_id → status da partida da rodada (decidido = encerrada ou inválida)."""
+    out: dict[int, dict] = {}
+    if not partidas_payload:
+        return out
+    for p in partidas_payload.get("partidas") or []:
+        st = str(p.get("status_transmissao_tr") or "").upper()
+        valida = p.get("valida")
+        decidido = (valida is False) or (st == "ENCERRADA")
+        info = {
+            "status": st,
+            "valida": valida,
+            "decidido": decidido,
+            "timestamp": p.get("timestamp"),
+            "partida_data": p.get("partida_data"),
+        }
+        for cid in (p.get("clube_casa_id"), p.get("clube_visitante_id")):
+            if cid is not None:
+                out[int(cid)] = info
+    return out
+
+
+def _live_atleta(atleta: dict, pontuados: dict) -> dict:
+    """Junta escalação com a pontuação ao vivo de /atletas/pontuados (não usa pontos_num velho)."""
+    aid = int(atleta.get("atleta_id"))
     tabela = (pontuados or {}).get("atletas") or {}
-    total = 0.0
-    jogados = 0
-    n = len(elenco or [])
+    pa = tabela.get(str(aid)) or {}
+    entrou = pa.get("entrou_em_campo") is True
+    if pa.get("pontuacao") is not None:
+        pontos = float(pa.get("pontuacao") or 0)
+    else:
+        pontos = 0.0
+    clube = pa.get("clube_id") if pa.get("clube_id") is not None else atleta.get("clube_id")
+    pos = pa.get("posicao_id") if pa.get("posicao_id") is not None else atleta.get("posicao_id")
+    return {
+        "atleta_id": aid,
+        "apelido": pa.get("apelido") or atleta.get("apelido") or str(aid),
+        "posicao_id": int(pos) if pos is not None else None,
+        "clube_id": int(clube) if clube is not None else None,
+        "preco_num": float(atleta.get("preco_num") or pa.get("preco_num") or 0),
+        "entrou": entrou,
+        "pontos": pontos,
+    }
+
+
+def _resumo_sub(atleta: dict, pontos: float | None = None) -> dict:
+    out = {
+        "atleta_id": atleta["atleta_id"],
+        "apelido": atleta.get("apelido"),
+        "posicao_id": atleta.get("posicao_id"),
+        "pontos": r2(atleta["pontos"] if pontos is None else pontos),
+    }
+    return out
+
+
+def _prioridade_ausente(atleta: dict, capitao_id: int | None, jogos: dict[int, dict]) -> tuple:
+    """Quem o banco substitui primeiro: jogo mais cedo, depois capitão, preço, nome."""
+    jogo = jogos.get(atleta["clube_id"] or -1) or {}
+    ts = jogo.get("timestamp")
+    try:
+        ts_n = int(ts) if ts is not None and ts != "" else 10**18
+    except (TypeError, ValueError):
+        ts_n = 10**18
+    eh_cap = 0 if (capitao_id is not None and atleta["atleta_id"] == capitao_id) else 1
+    return (ts_n, eh_cap, -atleta.get("preco_num", 0), (atleta.get("apelido") or "").lower())
+
+
+def pontos_do_elenco(
+    elenco: list,
+    reservas: list,
+    capitao_id: int | None,
+    reserva_luxo_id: int | None,
+    pontuados: dict,
+    partidas_payload: dict | None,
+) -> tuple[float, int, int, list[dict]]:
+    """Parcial com banco e reserva de luxo.
+
+    (a) Titular com jogo já decidido (encerrado ou inválido) que não entrou é
+        trocado pelo reserva da mesma posição, se este entrou e pontuou > 0.
+        Se o titular era o capitão, o reserva herda a braçadeira (1,5×) —
+        regra oficial do Cartola (ge, 2025; o banco em 2026 segue a mesma dinâmica).
+    (b) Reserva de luxo: quando todos os titulares da posição já têm jogo
+        decidido e entraram em campo, e o luxo não foi usado em (a), ele
+        substitui o titular de menor pontuação bruta se pontuou mais.
+    """
+    jogos = indice_jogos_por_clube(partidas_payload)
     cap = int(capitao_id) if capitao_id is not None else None
-    for a in elenco or []:
-        aid = a.get("atleta_id") if isinstance(a, dict) else a
-        if aid is None:
+    luxo_id = int(reserva_luxo_id) if reserva_luxo_id is not None else None
+    titulares = [_live_atleta(a, pontuados) for a in (elenco or []) if isinstance(a, dict) and a.get("atleta_id") is not None]
+    banco = [_live_atleta(a, pontuados) for a in (reservas or [])]
+    banco_por_pos: dict[int, dict] = {}
+    for r in banco:
+        if r.get("posicao_id") is not None:
+            banco_por_pos[int(r["posicao_id"])] = r
+
+    # Contribuição inicial dos titulares que entraram.
+    contrib: dict[int, float] = {}
+    capitao_efetivo = cap
+    for t in titulares:
+        if not t["entrou"]:
             continue
-        pa = tabela.get(str(aid))
-        if not pa or pa.get("entrou_em_campo") is not True:
-            continue
-        jogados += 1
-        p = float(pa.get("pontuacao") or 0)
-        if cap is not None and int(aid) == cap:
+        p = t["pontos"]
+        if cap is not None and t["atleta_id"] == cap:
             p *= CAPITAO_FATOR
-        total += p
-    return total, jogados, n
+        contrib[t["atleta_id"]] = p
+
+    substituicoes: list[dict] = []
+    luxo_usado = False
+
+    # (a) Reserva comum, uma vaga por posição.
+    ausentes_por_pos: dict[int, list[dict]] = {}
+    for t in titulares:
+        pos = t.get("posicao_id")
+        if pos is None or pos == 6:
+            continue
+        jogo = jogos.get(t["clube_id"] or -1)
+        if not jogo or not jogo.get("decidido"):
+            continue
+        if t["entrou"]:
+            continue
+        ausentes_por_pos.setdefault(int(pos), []).append(t)
+
+    for pos, ausentes in ausentes_por_pos.items():
+        reserva = banco_por_pos.get(pos)
+        if not reserva or not reserva["entrou"] or reserva["pontos"] <= 0:
+            continue
+        ausentes.sort(key=lambda a: _prioridade_ausente(a, cap, jogos))
+        sai = ausentes[0]
+        herda_cap = cap is not None and sai["atleta_id"] == cap
+        pts_entra = reserva["pontos"] * (CAPITAO_FATOR if herda_cap else 1.0)
+        contrib.pop(sai["atleta_id"], None)
+        contrib[reserva["atleta_id"]] = pts_entra
+        if herda_cap:
+            capitao_efetivo = reserva["atleta_id"]
+        if luxo_id is not None and reserva["atleta_id"] == luxo_id:
+            luxo_usado = True
+        substituicoes.append({
+            "tipo": "reserva",
+            "sai": _resumo_sub(sai, 0.0),
+            "entra": _resumo_sub(reserva, pts_entra),
+            "capitao_herdado": herda_cap,
+        })
+
+    # (b) Reserva de luxo, se ainda não entrou por (a).
+    luxo = next((r for r in banco if luxo_id is not None and r["atleta_id"] == luxo_id), None)
+    if luxo and not luxo_usado and luxo["entrou"] and luxo.get("posicao_id") not in (None, 6):
+        pos = int(luxo["posicao_id"])
+        mesmos = [t for t in titulares if t.get("posicao_id") == pos]
+        ids_ja_trocados = {s["sai"]["atleta_id"] for s in substituicoes}
+        efetivos = [t for t in mesmos if t["atleta_id"] not in ids_ja_trocados]
+        todos_decididos = all(
+            (jogos.get(t["clube_id"] or -1) or {}).get("decidido") for t in efetivos
+        ) and all((jogos.get(t["clube_id"] or -1) or {}).get("decidido") for t in mesmos)
+        todos_jogaram = all(t["entrou"] for t in efetivos)
+        if mesmos and todos_decididos and todos_jogaram:
+            # Desempate no menor scout: capitão sai primeiro; depois menor preço, nome.
+            def chave_luxo(t: dict) -> tuple:
+                eh_cap = 0 if (cap is not None and t["atleta_id"] == cap) else 1
+                return (t["pontos"], eh_cap, t.get("preco_num") or 0, (t.get("apelido") or "").lower())
+            pior = min(efetivos, key=chave_luxo)
+            if luxo["pontos"] > pior["pontos"]:
+                # Se o luxo tira o capitão que já jogou, a braçadeira não transfere
+                # (o capitão atuou; o 1,5× sai com ele).
+                contrib.pop(pior["atleta_id"], None)
+                contrib[luxo["atleta_id"]] = luxo["pontos"]
+                substituicoes.append({
+                    "tipo": "luxo",
+                    "sai": _resumo_sub(pior),
+                    "entra": _resumo_sub(luxo),
+                    "capitao_herdado": False,
+                })
+
+    total = sum(contrib.values())
+    jogados = len(contrib)
+    n = len(titulares) or 12
+    return total, jogados, n, substituicoes
+
+
 
 
 def _times_parciais_base(teams: list[dict], oficial: list[dict]) -> list[dict]:
@@ -1016,15 +1194,13 @@ def _fechar_parciais(rows: list[dict]) -> list[dict]:
             "variacao": variacao,
             "zona_premiacao": i <= ZONA_PREMIACAO,
         }
+        if row.get("substituicoes"):
+            item["substituicoes"] = row["substituicoes"]
         out.append(item)
     return out
 
 
-NOTA_PARCIAIS = (
-    "Parcial dos titulares, com o capitão em 1,5×. "
-    "O banco de reservas e a reserva de luxo não entram nesta conta, "
-    "porque a API pública não devolve a lista de reservas."
-)
+NOTA_PARCIAIS = None
 
 
 def compute_parciais(
@@ -1115,10 +1291,19 @@ def compute_parciais(
                 continue
             elenco = payload.get("atletas") or []
             cap = payload.get("capitao_id")
-            pts, jogados, n = pontos_do_elenco(elenco, cap, pontuados or {})
+            pts, jogados, n, subs = pontos_do_elenco(
+                elenco,
+                lista_reservas(payload),
+                cap,
+                payload.get("reserva_luxo_id"),
+                pontuados or {},
+                partidas,
+            )
             row["pontos_parcial"] = pts
             row["atletas_jogados"] = jogados
             row["atletas_total"] = n or 12
+            if subs:
+                row["substituicoes"] = subs
             escudo = (payload.get("time") or {}).get("url_escudo_png")
             if escudo:
                 row["escudo"] = escudo
