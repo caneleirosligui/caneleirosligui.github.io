@@ -6,7 +6,8 @@ Grava os JSONs na pasta data/ do site.
 
 Uso:
   python scripts/compute.py           # usa cache se houver; busca rodadas novas
-  python scripts/compute.py --fetch   # atualiza na API a rodada atual e as faltantes
+  python scripts/compute.py --fetch   # consulta a API; o gate decide se grava parciais, consolida ou não faz nada
+  python scripts/compute.py --force   # ignora o gate e roda tudo (também vale GITHUB_EVENT_NAME=workflow_dispatch)
   python scripts/compute.py --offline # só cache local, não chama a API
 """
 
@@ -72,6 +73,10 @@ API_BASE = "https://api.cartola.globo.com"
 UA = "Mozilla/5.0 (compatible; CaneleirosLigui/1.0; +https://caneleirosligui.github.io)"
 FETCH_DELAY = 0.12
 FETCH_RETRIES = 5
+
+# Janela de um jogo: do início até 2h30 depois (partida típica + 30 min).
+TZ_SP = timezone(timedelta(hours=-3))
+JANELA_APOS_INICIO = timedelta(hours=2, minutes=30)
 
 LIGA_ID = 3978835
 LIGA = "CANELEIROS LIGUI"
@@ -1045,7 +1050,7 @@ def compute_parciais(
         "bola_rolando": bool(mercado.get("bola_rolando")),
         "em_andamento": bool(em_andamento),
         "atualizado_em": now_sp(),
-        "intervalo_atualizacao_minutos": 30,
+        "intervalo_atualizacao_minutos": 10,
         "capitao_fator": CAPITAO_FATOR,
         "ultima_rodada_encerrada": last,
         "nota": NOTA_PARCIAIS,
@@ -1151,11 +1156,255 @@ def compute_parciais(
     return base_meta
 
 
+
+def now_sp_dt() -> datetime:
+    return datetime.now(TZ_SP)
+
+
+def parse_partida_inicio(partida: dict) -> datetime | None:
+    """Início do jogo em horário de Brasília, a partir de timestamp ou partida_data."""
+    ts = partida.get("timestamp")
+    if ts is not None and ts != "":
+        try:
+            return datetime.fromtimestamp(int(ts), TZ_SP)
+        except (TypeError, ValueError, OSError, OverflowError):
+            pass
+    raw = partida.get("partida_data")
+    if not raw:
+        return None
+    text = str(raw).strip().replace("T", " ")
+    # descarta fuso no fim, se vier
+    if text.endswith("Z"):
+        text = text[:-1].strip()
+    if "+" in text[10:] or text[10:].count("-") >= 1:
+        text = text[:19]
+    for fmt in ("%Y-%m-%d %H:%M:%S", "%Y-%m-%d %H:%M"):
+        try:
+            return datetime.strptime(text[:19], fmt).replace(tzinfo=TZ_SP)
+        except ValueError:
+            continue
+    return None
+
+
+def partida_entra_na_janela(partida: dict) -> bool:
+    """Jogos inválidos ficam de fora, salvo se já estiverem em andamento ou encerrados."""
+    st = str(partida.get("status_transmissao_tr") or "").upper()
+    if partida.get("valida") is False:
+        return st in {"EM_ANDAMENTO", "ENCERRADA"}
+    return True
+
+
+def fmt_sp(dt: datetime | None) -> str:
+    if not dt:
+        return "—"
+    return dt.astimezone(TZ_SP).strftime("%Y-%m-%d %H:%M")
+
+
+def inspecionar_janelas(partidas_payload: dict | None, agora: datetime, bola_rolando: bool = False) -> dict:
+    """Define se agora cai na janela de algum jogo da rodada (início até início+2h30)."""
+    partidas = (partidas_payload or {}).get("partidas") or []
+    ativos: list[dict] = []
+    futuras: list[dict] = []
+    em_andamento = False
+    for p in partidas:
+        if not partida_entra_na_janela(p):
+            continue
+        inicio = parse_partida_inicio(p)
+        if inicio is None:
+            continue
+        fim = inicio + JANELA_APOS_INICIO
+        st = str(p.get("status_transmissao_tr") or "").upper()
+        item = {"inicio": inicio, "fim": fim, "status": st, "partida": p}
+        if st == "EM_ANDAMENTO":
+            em_andamento = True
+            ativos.append(item)
+        elif inicio <= agora <= fim:
+            ativos.append(item)
+        elif agora < inicio:
+            futuras.append(item)
+    futuras.sort(key=lambda x: x["inicio"])
+    em_janela = bool(ativos) or bool(bola_rolando and not partidas)
+    # bola_rolando vale como janela mesmo se o horário já passou de início+2h30
+    if bola_rolando and not ativos:
+        em_janela = True
+    return {
+        "em_janela": em_janela,
+        "ativos": ativos,
+        "futuras": futuras,
+        "em_andamento": em_andamento or bool(bola_rolando),
+        "bola_rolando": bool(bola_rolando),
+    }
+
+
+def ultima_encerrada_na_api(status: dict) -> int:
+    """Melhor estimativa barata da última rodada oficial já fechada na API."""
+    rodada = int(status.get("rodada_atual") or 0)
+    st = status.get("status_mercado")
+    if status.get("game_over"):
+        return int(status.get("rodada_final") or rodada or 0)
+    if st == 1:
+        # Mercado aberto: a rodada_atual é a próxima; a anterior já foi consolidada.
+        return max(0, rodada - 1)
+    if st == 3 or status.get("mercado_pos_rodada"):
+        # Scouts oficiais da rodada_atual estão sendo (ou acabam de ser) fechados.
+        return rodada
+    return max(0, rodada - 1)
+
+
+def ultima_encerrada_no_site() -> int:
+    for path in (PATHS["site_data"] / "meta.json", PATHS["site_data"] / "site.json"):
+        if not path.exists():
+            continue
+        try:
+            data = load_json(path)
+        except Exception:  # noqa: BLE001
+            continue
+        if "ultima_rodada_encerrada" in data:
+            return int(data.get("ultima_rodada_encerrada") or 0)
+        meta = data.get("meta") or {}
+        if "ultima_rodada_encerrada" in meta:
+            return int(meta.get("ultima_rodada_encerrada") or 0)
+    slim = load_cached_slim()
+    return int((slim.get("mercado") or {}).get("rodada_atual") or 0) - 1 if slim.get("mercado") else 0
+
+
+def precisa_consultar_partidas(status: dict, last_api: int, last_site: int) -> bool:
+    if last_api > last_site:
+        return False
+    if status.get("bola_rolando"):
+        return True
+    return status.get("status_mercado") in (2, 3, 4)
+
+
+def descrever_decisao(decisao: dict) -> str:
+    partes = [
+        f"modo={decisao['modo']}",
+        f"rodada={decisao.get('rodada')}",
+        f"site=R{decisao.get('last_site')}",
+        f"api_encerrada=R{decisao.get('last_api')}",
+        "em_janela" if decisao.get("em_janela") else "fora_da_janela",
+    ]
+    if decisao.get("jogos"):
+        partes.append("jogos=[" + "; ".join(decisao["jogos"]) + "]")
+    if decisao.get("proxima"):
+        partes.append("próxima=" + decisao["proxima"])
+    partes.append(decisao.get("motivo") or "")
+    return "gate: " + " · ".join(p for p in partes if p)
+
+
+def _rotulo_jogo(p: dict, clubes: dict | None = None) -> str:
+    clubes = clubes or {}
+    def nome(cid):
+        c = clubes.get(str(cid)) or clubes.get(cid) or {}
+        return c.get("abreviacao") or c.get("nome") or str(cid)
+    return f"{nome(p.get('clube_casa_id'))} x {nome(p.get('clube_visitante_id'))}"
+
+
+def avaliar_gate(
+    status: dict,
+    partidas_payload: dict | None,
+    last_site: int,
+    agora: datetime | None = None,
+    force: bool = False,
+) -> dict:
+    """Decide se esta execução deve atualizar parciais, consolidar a rodada ou não fazer nada."""
+    agora = agora or now_sp_dt()
+    rodada = int(status.get("rodada_atual") or 0)
+    last_api = ultima_encerrada_na_api(status)
+    clubes = (partidas_payload or {}).get("clubes") or {}
+    info = inspecionar_janelas(partidas_payload, agora, bola_rolando=bool(status.get("bola_rolando")))
+    jogos = []
+    for item in info["ativos"]:
+        p = item["partida"]
+        fim = fmt_sp(item["fim"])
+        extra = "em andamento" if item["status"] == "EM_ANDAMENTO" else f"até {fim}"
+        jogos.append(f"{_rotulo_jogo(p, clubes)} ({extra})")
+    proxima = ""
+    if info["futuras"]:
+        nxt = info["futuras"][0]
+        proxima = f"{_rotulo_jogo(nxt['partida'], clubes)} às {fmt_sp(nxt['inicio'])}"
+
+    base = {
+        "rodada": rodada,
+        "last_site": last_site,
+        "last_api": last_api,
+        "em_janela": bool(info["em_janela"]),
+        "jogos": jogos,
+        "proxima": proxima,
+        "agora": fmt_sp(agora),
+    }
+    if force:
+        return {**base, "modo": "completo", "motivo": "disparo manual; ignora o gate"}
+    if last_api > last_site:
+        return {
+            **base,
+            "modo": "consolidar",
+            "motivo": f"a API já consolidou a rodada {last_api} e o site ainda está na {last_site}",
+        }
+    if info["em_janela"]:
+        motivo = "jogo em andamento" if info["em_andamento"] or status.get("bola_rolando") else "dentro da janela de um jogo (início + 2h30)"
+        return {**base, "modo": "parciais", "motivo": motivo}
+    return {
+        **base,
+        "modo": "skip",
+        "motivo": "fora da janela de jogos; nada a publicar até o próximo jogo ou a consolidação oficial",
+    }
+
+
+def consultar_gate(force: bool = False, agora: datetime | None = None) -> dict:
+    """Consulta só /mercado/status e, se preciso, /partidas. Não grava arquivo."""
+    status = fetch_status()
+    last_site = ultima_encerrada_no_site()
+    last_api = ultima_encerrada_na_api(status)
+    partidas = None
+    if force or precisa_consultar_partidas(status, last_api, last_site):
+        rodada = int(status.get("rodada_atual") or 0)
+        if rodada:
+            partidas = http_get_optional(f"{API_BASE}/partidas/{rodada}")
+    return avaliar_gate(status, partidas, last_site, agora=agora, force=force)
+
+
+def atualizar_so_parciais(status: dict | None = None) -> None:
+    """Recalcula só data/parciais.json, sem mexer na classificação oficial."""
+    # offline=True evita o fetch_into completo (também no GitHub Actions).
+    teams, _grupos, slim, mercado = load_inputs(fetch=False, offline=True)
+    if status:
+        mercado = {
+            **mercado,
+            "rodada_atual": status.get("rodada_atual", mercado.get("rodada_atual")),
+            "status_mercado": status.get("status_mercado", mercado.get("status_mercado")),
+            "temporada": status.get("temporada", mercado.get("temporada")),
+            "bola_rolando": status.get("bola_rolando", mercado.get("bola_rolando")),
+            "mercado_pos_rodada": status.get("mercado_pos_rodada", mercado.get("mercado_pos_rodada")),
+            "game_over": status.get("game_over", mercado.get("game_over")),
+            "nome_rodada": status.get("nome_rodada", mercado.get("nome_rodada")),
+            "rodada_final": status.get("rodada_final", mercado.get("rodada_final")),
+        }
+        slim = dict(slim)
+        slim["mercado"] = mercado
+    rodada_atual, last, _parcial = scored_rounds(slim, teams, mercado)
+    parciais = compute_parciais(
+        teams, slim, last, rodada_atual, mercado, allow_fetch=True
+    )
+    dest = OUT / "parciais.json"
+    OUT.mkdir(parents=True, exist_ok=True)
+    dump_json(dest, parciais)
+    print(f"atualizado somente {dest}  (parciais R{parciais.get('rodada')}, em_andamento={parciais.get('em_andamento')})")
+    if parciais.get("times"):
+        por_rod = sorted(parciais["times"], key=lambda x: x.get("posicao_rodada") or 99)
+        print(
+            "parciais:",
+            ", ".join(f"{t['posicao_rodada']}.{t['nome']} {t['pontos_parcial']}" for t in por_rod[:5]),
+        )
+
+
 def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     p = argparse.ArgumentParser(description="Atualiza os JSONs da Caneleiros Ligui.")
     p.add_argument("--fetch", action="store_true", help="consulta a API (padrão no GitHub Action)")
     p.add_argument("--offline", action="store_true", help="não chama a API; usa só o cache")
     p.add_argument("--fetch-all", action="store_true", help="baixa de novo todas as rodadas")
+    p.add_argument("--force", action="store_true", help="ignora o gate e atualiza tudo")
+    p.add_argument("--gate", action="store_true", help="só consulta o gate (status/partidas) e encerra")
     return p.parse_args(argv)
 
 
@@ -1168,6 +1417,34 @@ def main(argv: list[str] | None = None) -> None:
     # Local com cache completo: não precisa ir à API, a menos que peçam --fetch.
     if not fetch and not offline and not load_cached_slim().get("times") and not (RAW / "slim.json").exists() and not PATHS["historico"].exists():
         fetch = True
+    forced = bool(
+        getattr(args, "force", False)
+        or getattr(args, "fetch_all", False)
+        or os.environ.get("GITHUB_EVENT_NAME") == "workflow_dispatch"
+    )
+    if getattr(args, "gate", False) or (fetch and not offline):
+        try:
+            decisao = consultar_gate(force=forced)
+        except Exception as exc:  # noqa: BLE001
+            if getattr(args, "gate", False):
+                raise SystemExit(f"gate: falha ao consultar a API ({exc})")
+            print(f"gate: falha ao consultar a API ({exc}); seguindo com a execução normal", file=sys.stderr)
+            decisao = None
+        else:
+            print(descrever_decisao(decisao))
+            if getattr(args, "gate", False):
+                return
+            if not forced:
+                if decisao["modo"] == "skip":
+                    print("nenhum arquivo alterado")
+                    return
+                if decisao["modo"] == "parciais":
+                    try:
+                        status_agora = fetch_status()
+                    except Exception:  # noqa: BLE001
+                        status_agora = None
+                    atualizar_so_parciais(status=status_agora)
+                    return
     teams, grupos, slim, mercado = load_inputs(fetch=fetch, offline=offline, force_all=bool(args.fetch_all))
     rodada_atual, last, parcial = scored_rounds(slim, teams, mercado)
     rodada_final = int(mercado.get("rodada_final") or 38)
