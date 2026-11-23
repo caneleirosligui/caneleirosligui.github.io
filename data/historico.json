@@ -3,7 +3,7 @@
     "rodada_atual": 36,
     "status_mercado": 2,
     "temporada": 2026,
-    "bola_rolando": true,
+    "bola_rolando": false,
     "mercado_pos_rodada": false,
     "fechamento": {
       "dia": 21,
