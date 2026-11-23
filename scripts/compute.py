@@ -77,6 +77,7 @@ LIGA_ID = 3978835
 LIGA = "CANELEIROS LIGUI"
 TEMPORADA = 2026
 ZONA_PREMIACAO = 5
+CAPITAO_FATOR = 1.5  # regra 2026 (desde 2022); confirmado na API
 TAXA = 100
 INSCRITOS = 35
 ARRECADADO = INSCRITOS * TAXA
@@ -163,6 +164,23 @@ def http_get(url: str) -> dict:
             print(f"  retry {attempt}/{FETCH_RETRIES} {url} ({exc}); sleep {wait}s", file=sys.stderr)
             time.sleep(wait)
     raise RuntimeError(f"falha ao baixar {url}: {last_err}")
+
+
+def http_get_optional(url: str) -> dict | None:
+    """GET que devolve None em 400/404 ou falha de rede, sem esgotar retries."""
+    if requests is None:
+        raise SystemExit("Este script precisa do pacote 'requests' (pip install requests).")
+    try:
+        resp = requests.get(url, headers={"User-Agent": UA, "Accept": "application/json"}, timeout=30)
+        if resp.status_code in (400, 404):
+            return None
+        resp.raise_for_status()
+        data = resp.json()
+        return data if isinstance(data, dict) else None
+    except Exception as exc:  # noqa: BLE001
+        print(f"aviso: não obtive {url} ({exc})", file=sys.stderr)
+        return None
+
 
 
 def slim_from_payload(payload: dict, requested_rodada: int) -> dict:
@@ -883,6 +901,256 @@ def dump_if_changed(path: Path, obj: Any) -> bool:
     return True
 
 
+
+def resumo_jogos(payload: dict | None) -> dict:
+    out = {"encerrados": 0, "em_andamento": 0, "a_jogar": 0, "nao_validos": 0, "total": 0}
+    if not payload:
+        return out
+    partidas = payload.get("partidas") or []
+    out["total"] = len(partidas)
+    for p in partidas:
+        if p.get("valida") is False:
+            out["nao_validos"] += 1
+            continue
+        st = str(p.get("status_transmissao_tr") or "").upper()
+        if st == "ENCERRADA":
+            out["encerrados"] += 1
+        elif st == "EM_ANDAMENTO":
+            out["em_andamento"] += 1
+        else:
+            out["a_jogar"] += 1
+    return out
+
+
+def texto_jogos(jogos: dict) -> str:
+    bits = []
+    n = jogos.get("encerrados") or 0
+    if n:
+        bits.append(f"{n} encerrado" + ("s" if n != 1 else ""))
+    n = jogos.get("em_andamento") or 0
+    if n:
+        bits.append(f"{n} em andamento")
+    n = jogos.get("a_jogar") or 0
+    if n:
+        bits.append(f"{n} a jogar")
+    n = jogos.get("nao_validos") or 0
+    extra = f" {n} jogo" + ("s" if n != 1 else "") + " não válido" + ("s" if n != 1 else "") + " nesta rodada." if n else ""
+    if not bits and not extra:
+        return ""
+    corpo = ", ".join(bits)
+    if corpo:
+        return "Jogos da rodada: " + corpo + "." + extra
+    return extra.strip()
+
+
+def pontos_do_elenco(elenco: list, capitao_id: int | None, pontuados: dict) -> tuple[float, int, int]:
+    """Soma a parcial dos titulares. Capitão em 1,5×. Só conta quem entrou em campo."""
+    tabela = (pontuados or {}).get("atletas") or {}
+    total = 0.0
+    jogados = 0
+    n = len(elenco or [])
+    cap = int(capitao_id) if capitao_id is not None else None
+    for a in elenco or []:
+        aid = a.get("atleta_id") if isinstance(a, dict) else a
+        if aid is None:
+            continue
+        pa = tabela.get(str(aid))
+        if not pa or pa.get("entrou_em_campo") is not True:
+            continue
+        jogados += 1
+        p = float(pa.get("pontuacao") or 0)
+        if cap is not None and int(aid) == cap:
+            p *= CAPITAO_FATOR
+        total += p
+    return total, jogados, n
+
+
+def _times_parciais_base(teams: list[dict], oficial: list[dict]) -> list[dict]:
+    by_id = {row["time_id"]: row for row in oficial}
+    rows = []
+    for t in teams:
+        of = by_id.get(t["time_id"]) or {}
+        rows.append({
+            "time_id": t["time_id"],
+            "nome": t["nome"],
+            "dono": t["dono"],
+            "escudo": of.get("escudo") or t.get("escudo"),
+            "pontos_parcial": 0.0,
+            "atletas_jogados": 0,
+            "atletas_total": 12,
+            "total_geral_oficial": of.get("pontos") if of.get("pontos") is not None else 0.0,
+            "total_geral_parcial": of.get("pontos") if of.get("pontos") is not None else 0.0,
+            "posicao_oficial": of.get("posicao"),
+            "patrimonio": of.get("patrimonio"),
+        })
+    return rows
+
+
+def _fechar_parciais(rows: list[dict]) -> list[dict]:
+    por_rodada = sorted(rows, key=lambda x: (-(x["pontos_parcial"] or 0), -(x.get("patrimonio") or 0), x["nome"].lower()))
+    for i, row in enumerate(por_rodada, 1):
+        row["posicao_rodada"] = i
+    por_geral = sorted(rows, key=lambda x: (-(x["total_geral_parcial"] or 0), -(x.get("patrimonio") or 0), x["nome"].lower()))
+    out = []
+    for i, row in enumerate(por_geral, 1):
+        oficial = row.get("posicao_oficial")
+        variacao = (oficial - i) if isinstance(oficial, int) else 0
+        item = {
+            "time_id": row["time_id"],
+            "nome": row["nome"],
+            "dono": row["dono"],
+            "escudo": row.get("escudo"),
+            "pontos_parcial": r2(row["pontos_parcial"]) if row["pontos_parcial"] is not None else 0.0,
+            "atletas_jogados": row["atletas_jogados"],
+            "atletas_total": row["atletas_total"],
+            "total_geral_oficial": r2(row["total_geral_oficial"]) if row["total_geral_oficial"] is not None else 0.0,
+            "total_geral_parcial": r2(row["total_geral_parcial"]) if row["total_geral_parcial"] is not None else 0.0,
+            "posicao_oficial": oficial,
+            "posicao_parcial": i,
+            "posicao_rodada": row["posicao_rodada"],
+            "variacao": variacao,
+            "zona_premiacao": i <= ZONA_PREMIACAO,
+        }
+        out.append(item)
+    return out
+
+
+NOTA_PARCIAIS = (
+    "Parcial dos titulares, com o capitão em 1,5×. "
+    "O banco de reservas e a reserva de luxo não entram nesta conta, "
+    "porque a API pública não devolve a lista de reservas."
+)
+
+
+def compute_parciais(
+    teams: list[dict],
+    slim: dict,
+    last: int,
+    rodada_atual: int,
+    mercado: dict,
+    allow_fetch: bool,
+) -> dict:
+    """Monta data/parciais.json. Não altera classificação oficial, medalhas nem copas."""
+    oficial = classify(teams, slim, last) if last else []
+    status_id = mercado.get("status_mercado")
+    em_andamento = (
+        last < (rodada_atual or 0)
+        and status_id in (2, 3)
+        and not mercado.get("game_over")
+    )
+    base_meta = {
+        "rodada": rodada_atual or last,
+        "status_mercado": status_id,
+        "status_mercado_nome": STATUS_MERCADO.get(status_id, "desconhecido"),
+        "bola_rolando": bool(mercado.get("bola_rolando")),
+        "em_andamento": bool(em_andamento),
+        "atualizado_em": now_sp(),
+        "intervalo_atualizacao_minutos": 30,
+        "capitao_fator": CAPITAO_FATOR,
+        "ultima_rodada_encerrada": last,
+        "nota": NOTA_PARCIAIS,
+        "atletas_pontuados": 0,
+        "jogos": resumo_jogos(None),
+        "texto_jogos": "",
+        "mensagem": None,
+        "times": [],
+    }
+
+    if not em_andamento:
+        rod = last or rodada_atual
+        rows = _times_parciais_base(teams, oficial)
+        for row in rows:
+            p = points_of(slim, row["time_id"], rod) if rod else None
+            row["pontos_parcial"] = p if p is not None else 0.0
+            rec = slim.get("times", {}).get(str(row["time_id"]), {}).get(str(rod), {}) or {}
+            row["atletas_total"] = rec.get("n_atletas") or 12
+            row["atletas_jogados"] = rec.get("n_atletas_com_pontos") or 0
+            row["total_geral_parcial"] = row["total_geral_oficial"]
+        if mercado.get("game_over"):
+            msg = "A temporada encerrou. Abaixo, o resultado da última rodada."
+        elif status_id == 1:
+            msg = (
+                f"Não há rodada em andamento (mercado aberto). "
+                f"Abaixo, o resultado da rodada {rod}."
+            )
+        else:
+            msg = f"Não há rodada em andamento. Abaixo, o resultado da rodada {rod}."
+        base_meta.update({
+            "rodada": rod,
+            "mensagem": msg,
+            "times": _fechar_parciais(rows),
+        })
+        return base_meta
+
+    pontuados = None
+    partidas = None
+    if allow_fetch:
+        pontuados = http_get_optional(f"{API_BASE}/atletas/pontuados")
+        partidas = http_get_optional(f"{API_BASE}/partidas/{rodada_atual}")
+    jogos = resumo_jogos(partidas)
+    atletas_n = 0
+    if pontuados:
+        atletas_n = int(pontuados.get("total_atletas") or len(pontuados.get("atletas") or {}))
+        if pontuados.get("rodada") and int(pontuados["rodada"]) != int(rodada_atual):
+            # Pontuados de outra rodada: não usa.
+            pontuados = None
+            atletas_n = 0
+
+    rows = _times_parciais_base(teams, oficial)
+    elencos_ok = 0
+    if allow_fetch:
+        for i, row in enumerate(rows):
+            time.sleep(FETCH_DELAY)
+            try:
+                payload = http_get(f"{API_BASE}/time/id/{row['time_id']}/{rodada_atual}")
+            except Exception as exc:  # noqa: BLE001
+                print(f"aviso: elenco {row['nome']} R{rodada_atual}: {exc}", file=sys.stderr)
+                continue
+            if not payload_ok(payload, row["time_id"]):
+                continue
+            elenco = payload.get("atletas") or []
+            cap = payload.get("capitao_id")
+            pts, jogados, n = pontos_do_elenco(elenco, cap, pontuados or {})
+            row["pontos_parcial"] = pts
+            row["atletas_jogados"] = jogados
+            row["atletas_total"] = n or 12
+            escudo = (payload.get("time") or {}).get("url_escudo_png")
+            if escudo:
+                row["escudo"] = escudo
+            row["total_geral_parcial"] = (row["total_geral_oficial"] or 0) + pts
+            elencos_ok += 1
+            if (i + 1) % 35 == 0 or (i + 1) == len(rows):
+                print(f"  parciais elencos {i+1}/{len(rows)}")
+    else:
+        base_meta["mensagem"] = (
+            f"A rodada {rodada_atual} está em andamento, mas esta execução não consultou a API. "
+            "As parciais não foram atualizadas."
+        )
+
+    if allow_fetch and elencos_ok == 0:
+        base_meta["mensagem"] = (
+            f"A rodada {rodada_atual} está em andamento, mas não foi possível obter as escalações."
+        )
+
+    msg = base_meta.get("mensagem")
+    if not msg:
+        if jogos.get("em_andamento") or jogos.get("encerrados"):
+            msg = f"Rodada {rodada_atual} em andamento."
+        elif status_id == 2:
+            msg = f"Mercado fechado. Os jogos da rodada {rodada_atual} ainda não começaram ou as parciais ainda não saíram."
+        else:
+            msg = f"Rodada {rodada_atual} em atualização."
+
+    base_meta.update({
+        "atletas_pontuados": atletas_n,
+        "jogos": jogos,
+        "texto_jogos": texto_jogos(jogos),
+        "mensagem": msg,
+        "times": _fechar_parciais(rows),
+    })
+    return base_meta
+
+
 def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     p = argparse.ArgumentParser(description="Atualiza os JSONs da Caneleiros Ligui.")
     p.add_argument("--fetch", action="store_true", help="consulta a API (padrão no GitHub Action)")
@@ -950,6 +1218,14 @@ def main(argv: list[str] | None = None) -> None:
 
     premiacao = build_premiacao(classificacao, copas, maior, quadro, last, rodada_final=rodada_final)
 
+    parciais = None
+    try:
+        parciais = compute_parciais(
+            teams, slim, last, rodada_atual, mercado, allow_fetch=bool(fetch and not offline)
+        )
+    except Exception as exc:  # noqa: BLE001
+        print(f"aviso: parciais não geradas: {exc}", file=sys.stderr)
+
     # Histórico slim (pontos/patrimônio por rodada) versionado junto com o site.
     PATHS["historico"].parent.mkdir(parents=True, exist_ok=True)
     dump_json(PATHS["historico"], slim)
@@ -1002,6 +1278,13 @@ def main(argv: list[str] | None = None) -> None:
     for name, obj in outputs.items():
         if dump_if_changed(OUT / name, obj):
             changed.append(name)
+    if parciais is not None:
+        # Com a rodada em andamento, grava sempre para o horário de atualização avançar.
+        dest = OUT / "parciais.json"
+        if parciais.get("em_andamento") or dump_if_changed(dest, parciais):
+            if parciais.get("em_andamento"):
+                dump_json(dest, parciais)
+            changed.append("parciais.json")
     # Histórico slim: só grava de novo se o conteúdo (sem mercado volátil demais) já foi
     # persistido no fetch; aqui regrava para o layout local do site.
     if PATHS["historico"].parent.exists():
@@ -1016,6 +1299,15 @@ def main(argv: list[str] | None = None) -> None:
     if maior["vencedores"]:
         v = maior["vencedores"][0]
         print("maior pontuação:", v["pontos"], "R" + str(v["rodada"]), v["nome"])
+    if parciais and parciais.get("times"):
+        top = parciais["times"]
+        por_rod = sorted(top, key=lambda x: x.get("posicao_rodada") or 99)
+        print(
+            "parciais:",
+            "em_andamento" if parciais.get("em_andamento") else "encerrada",
+            "R" + str(parciais.get("rodada")),
+            ", ".join(f"{t['posicao_rodada']}.{t['nome']} {t['pontos_parcial']}" for t in por_rod[:5]),
+        )
     for c in copas:
         camp = c["mata_mata"].get("campeao")
         print(f"{c['nome']} fase={c['fase']} campeao={camp['nome'] if camp else '-'}")
