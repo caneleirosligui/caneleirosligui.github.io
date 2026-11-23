@@ -4,11 +4,11 @@
   "status_mercado_nome": "fechado",
   "bola_rolando": false,
   "em_andamento": true,
-  "atualizado_em": "2026-11-22T21:45:09-03:00",
+  "atualizado_em": "2026-11-22T21:56:17-03:00",
   "intervalo_atualizacao_minutos": 10,
   "capitao_fator": 1.5,
   "ultima_rodada_encerrada": 35,
-  "nota": "Parcial dos titulares, com o capitão em 1,5×. O banco de reservas e a reserva de luxo não entram nesta conta, porque a API pública não devolve a lista de reservas.",
+  "nota": null,
   "atletas_pontuados": 210,
   "jogos": {
     "encerrados": 6,
@@ -25,16 +25,50 @@
       "nome": "FLASTAR FC",
       "dono": "Amauri",
       "escudo": "https://s2-cartola.glbimg.com/g2MztGrMsh4OyjgDM8eZ85NJ19k=/https://s3.glbimg.com/v1/AUTH_58d78b787ec34892b5aaa0c7a146155f/cartola_assets_2/escudo/de/22/02/00aaf1bb21-6c66-465b-ba30-964f0603e3de20260113172202",
-      "pontos_parcial": 77.01,
-      "atletas_jogados": 10,
+      "pontos_parcial": 81.51,
+      "atletas_jogados": 11,
       "atletas_total": 12,
       "total_geral_oficial": 3095.9062,
-      "total_geral_parcial": 3172.9162,
+      "total_geral_parcial": 3177.4162,
       "posicao_oficial": 1,
       "posicao_parcial": 1,
-      "posicao_rodada": 3,
+      "posicao_rodada": 1,
       "variacao": 0,
-      "zona_premiacao": true
+      "zona_premiacao": true,
+      "substituicoes": [
+        {
+          "tipo": "reserva",
+          "sai": {
+            "atleta_id": 72294,
+            "apelido": "Everson",
+            "posicao_id": 1,
+            "pontos": 0.0
+          },
+          "entra": {
+            "atleta_id": 117404,
+            "apelido": "Otávio",
+            "posicao_id": 1,
+            "pontos": 2.9
+          },
+          "capitao_herdado": false
+        },
+        {
+          "tipo": "luxo",
+          "sai": {
+            "atleta_id": 39148,
+            "apelido": "Hulk",
+            "posicao_id": 5,
+            "pontos": 0.2
+          },
+          "entra": {
+            "atleta_id": 131967,
+            "apelido": "Villarreal",
+            "posicao_id": 5,
+            "pontos": 1.8
+          },
+          "capitao_herdado": false
+        }
+      ]
     },
     {
       "time_id": 3057019,
@@ -48,7 +82,7 @@
       "total_geral_parcial": 3143.3831,
       "posicao_oficial": 2,
       "posicao_parcial": 2,
-      "posicao_rodada": 9,
+      "posicao_rodada": 11,
       "variacao": 0,
       "zona_premiacao": true
     },
@@ -64,7 +98,7 @@
       "total_geral_parcial": 3123.6725,
       "posicao_oficial": 3,
       "posicao_parcial": 3,
-      "posicao_rodada": 20,
+      "posicao_rodada": 22,
       "variacao": 0,
       "zona_premiacao": true
     },
@@ -96,7 +130,7 @@
       "total_geral_parcial": 3119.0725,
       "posicao_oficial": 4,
       "posicao_parcial": 5,
-      "posicao_rodada": 11,
+      "posicao_rodada": 15,
       "variacao": -1,
       "zona_premiacao": true
     },
@@ -112,7 +146,7 @@
       "total_geral_parcial": 3091.1256,
       "posicao_oficial": 8,
       "posicao_parcial": 6,
-      "posicao_rodada": 2,
+      "posicao_rodada": 3,
       "variacao": 2,
       "zona_premiacao": false
     },
@@ -121,48 +155,102 @@
       "nome": "Luigi F.G.C.",
       "dono": "Luigi",
       "escudo": "https://s2-cartola.glbimg.com/5jStnMdqIVsQkEzF4ZFTG-Ejc8s=/https://s3.glbimg.com/v1/AUTH_58d78b787ec34892b5aaa0c7a146155f/cartola_svg_100/escudo/39/45/09/00f693fbb2-1b36-4376-85a8-724aaeca0b3920180322124509",
-      "pontos_parcial": 48.21,
-      "atletas_jogados": 9,
+      "pontos_parcial": 54.01,
+      "atletas_jogados": 10,
       "atletas_total": 12,
       "total_geral_oficial": 3023.3594,
-      "total_geral_parcial": 3071.5694,
+      "total_geral_parcial": 3077.3694,
       "posicao_oficial": 6,
       "posicao_parcial": 7,
-      "posicao_rodada": 26,
+      "posicao_rodada": 18,
       "variacao": -1,
-      "zona_premiacao": false
+      "zona_premiacao": false,
+      "substituicoes": [
+        {
+          "tipo": "reserva",
+          "sai": {
+            "atleta_id": 101574,
+            "apelido": "Hugo Souza",
+            "posicao_id": 1,
+            "pontos": 0.0
+          },
+          "entra": {
+            "atleta_id": 104084,
+            "apelido": "Carlos Miguel",
+            "posicao_id": 1,
+            "pontos": 5.8
+          },
+          "capitao_herdado": false
+        }
+      ]
     },
     {
       "time_id": 222961,
       "nome": "Bocó H7 FC",
       "dono": "Hugo",
       "escudo": "https://s2-cartola.glbimg.com/1p6D5s0cLw7wM8CfnRtQ_SE2_R0=/https://s3.glbimg.com/v1/AUTH_58d78b787ec34892b5aaa0c7a146155f/cartola_assets_2/escudo/fe/37/51/00b5d29339-2f0e-42e4-b91f-c7483a9f76fe20260119183751",
-      "pontos_parcial": 51.21,
-      "atletas_jogados": 9,
+      "pontos_parcial": 52.01,
+      "atletas_jogados": 10,
       "atletas_total": 12,
       "total_geral_oficial": 3018.7656,
-      "total_geral_parcial": 3069.9756,
+      "total_geral_parcial": 3070.7756,
       "posicao_oficial": 7,
       "posicao_parcial": 8,
-      "posicao_rodada": 21,
+      "posicao_rodada": 23,
       "variacao": -1,
-      "zona_premiacao": false
+      "zona_premiacao": false,
+      "substituicoes": [
+        {
+          "tipo": "reserva",
+          "sai": {
+            "atleta_id": 123869,
+            "apelido": "Aguirre",
+            "posicao_id": 3,
+            "pontos": 0.0
+          },
+          "entra": {
+            "atleta_id": 123445,
+            "apelido": "Dantas",
+            "posicao_id": 3,
+            "pontos": 0.8
+          },
+          "capitao_herdado": false
+        }
+      ]
     },
     {
       "time_id": 13944149,
       "nome": "ALANFEC1918",
       "dono": "Alan",
       "escudo": "https://s2-cartola.glbimg.com/hMir50DNLFQ7QO2d8cNdJk85GOg=/https://s3.glbimg.com/v1/AUTH_58d78b787ec34892b5aaa0c7a146155f/cartola_assets_2/escudo/a7/37/51/0096807f06-1bb0-4382-a13e-6ae27afd0ba720260113113751",
-      "pontos_parcial": 71.08,
-      "atletas_jogados": 10,
+      "pontos_parcial": 73.98,
+      "atletas_jogados": 11,
       "atletas_total": 12,
       "total_geral_oficial": 2989.9844,
-      "total_geral_parcial": 3061.0644,
+      "total_geral_parcial": 3063.9644,
       "posicao_oficial": 11,
       "posicao_parcial": 9,
-      "posicao_rodada": 6,
+      "posicao_rodada": 5,
       "variacao": 2,
-      "zona_premiacao": false
+      "zona_premiacao": false,
+      "substituicoes": [
+        {
+          "tipo": "reserva",
+          "sai": {
+            "atleta_id": 101574,
+            "apelido": "Hugo Souza",
+            "posicao_id": 1,
+            "pontos": 0.0
+          },
+          "entra": {
+            "atleta_id": 117404,
+            "apelido": "Otávio",
+            "posicao_id": 1,
+            "pontos": 2.9
+          },
+          "capitao_herdado": false
+        }
+      ]
     },
     {
       "time_id": 8895226,
@@ -176,7 +264,7 @@
       "total_geral_parcial": 3060.3256,
       "posicao_oficial": 9,
       "posicao_parcial": 10,
-      "posicao_rodada": 23,
+      "posicao_rodada": 24,
       "variacao": -1,
       "zona_premiacao": false
     },
@@ -185,96 +273,220 @@
       "nome": "Rangel Madrid CF",
       "dono": "Fábio Rangel",
       "escudo": "https://s2-cartola.glbimg.com/2HFvF_mZfHE4uQF2dRIRtzdpdtI=/https://s3.glbimg.com/v1/AUTH_58d78b787ec34892b5aaa0c7a146155f/cartola_assets_2/escudo/66/38/10/00154ee3d9-f196-4ab4-9209-8a36d741cb6620260114073810",
-      "pontos_parcial": 50.41,
-      "atletas_jogados": 8,
+      "pontos_parcial": 53.31,
+      "atletas_jogados": 9,
       "atletas_total": 12,
       "total_geral_oficial": 2990.0781,
-      "total_geral_parcial": 3040.4881,
+      "total_geral_parcial": 3043.3881,
       "posicao_oficial": 10,
       "posicao_parcial": 11,
-      "posicao_rodada": 22,
+      "posicao_rodada": 20,
       "variacao": -1,
-      "zona_premiacao": false
+      "zona_premiacao": false,
+      "substituicoes": [
+        {
+          "tipo": "reserva",
+          "sai": {
+            "atleta_id": 42234,
+            "apelido": "Cássio",
+            "posicao_id": 1,
+            "pontos": 0.0
+          },
+          "entra": {
+            "atleta_id": 117404,
+            "apelido": "Otávio",
+            "posicao_id": 1,
+            "pontos": 2.9
+          },
+          "capitao_herdado": false
+        }
+      ]
     },
     {
       "time_id": 114758,
       "nome": "CWB - BSB",
       "dono": "Marcelo Botelho",
       "escudo": "https://s2-cartola.glbimg.com/c3caKu-GEeZx7VSW1kKlhZW8PTo=/https://s3.glbimg.com/v1/AUTH_58d78b787ec34892b5aaa0c7a146155f/cartola_assets_2/escudo/50/24/15/002e7b641c-a574-4e2f-b88d-7203375c255020260113132415",
-      "pontos_parcial": 58.63,
+      "pontos_parcial": 70.53,
       "atletas_jogados": 11,
       "atletas_total": 12,
       "total_geral_oficial": 2964.125,
-      "total_geral_parcial": 3022.755,
+      "total_geral_parcial": 3034.655,
       "posicao_oficial": 12,
       "posicao_parcial": 12,
-      "posicao_rodada": 12,
+      "posicao_rodada": 7,
       "variacao": 0,
-      "zona_premiacao": false
+      "zona_premiacao": false,
+      "substituicoes": [
+        {
+          "tipo": "luxo",
+          "sai": {
+            "atleta_id": 39148,
+            "apelido": "Hulk",
+            "posicao_id": 5,
+            "pontos": 0.2
+          },
+          "entra": {
+            "atleta_id": 127871,
+            "apelido": "Vargas",
+            "posicao_id": 5,
+            "pontos": 12.2
+          },
+          "capitao_herdado": false
+        }
+      ]
     },
     {
       "time_id": 3624709,
       "nome": "Hangoover Meus Ovos",
       "dono": "Arthur",
       "escudo": "https://s2-cartola.glbimg.com/YlNjCIRrxAcTPCoK9pv13qPCxeI=/https://s3.glbimg.com/v1/AUTH_58d78b787ec34892b5aaa0c7a146155f/cartola_assets_3/escudo/dc/58/44/00a2dd4183-a2b1-44cd-b9af-a248f37b48dc20260125165844",
-      "pontos_parcial": 58.51,
-      "atletas_jogados": 9,
+      "pontos_parcial": 61.41,
+      "atletas_jogados": 10,
       "atletas_total": 12,
       "total_geral_oficial": 2945.5938,
-      "total_geral_parcial": 3004.1038,
+      "total_geral_parcial": 3007.0038,
       "posicao_oficial": 13,
       "posicao_parcial": 13,
-      "posicao_rodada": 13,
+      "posicao_rodada": 14,
       "variacao": 0,
-      "zona_premiacao": false
+      "zona_premiacao": false,
+      "substituicoes": [
+        {
+          "tipo": "reserva",
+          "sai": {
+            "atleta_id": 42234,
+            "apelido": "Cássio",
+            "posicao_id": 1,
+            "pontos": 0.0
+          },
+          "entra": {
+            "atleta_id": 117404,
+            "apelido": "Otávio",
+            "posicao_id": 1,
+            "pontos": 2.9
+          },
+          "capitao_herdado": false
+        }
+      ]
     },
     {
       "time_id": 1280429,
       "nome": "C.R.Fabio1982",
       "dono": "Fábio",
       "escudo": "https://s2-cartola.glbimg.com/2EqrCWfSj8JIEnnQWsiqOiGWuR4=/https://s3.glbimg.com/v1/AUTH_58d78b787ec34892b5aaa0c7a146155f/cartola_assets_2/escudo/e9/38/37/0032bd5ebc-d507-456c-9f5d-4377437757e920260122143837",
-      "pontos_parcial": 55.9,
-      "atletas_jogados": 9,
+      "pontos_parcial": 61.9,
+      "atletas_jogados": 10,
       "atletas_total": 12,
       "total_geral_oficial": 2914.7031,
-      "total_geral_parcial": 2970.6031,
+      "total_geral_parcial": 2976.6031,
       "posicao_oficial": 14,
       "posicao_parcial": 14,
-      "posicao_rodada": 16,
+      "posicao_rodada": 13,
       "variacao": 0,
-      "zona_premiacao": false
+      "zona_premiacao": false,
+      "substituicoes": [
+        {
+          "tipo": "reserva",
+          "sai": {
+            "atleta_id": 101574,
+            "apelido": "Hugo Souza",
+            "posicao_id": 1,
+            "pontos": 0.0
+          },
+          "entra": {
+            "atleta_id": 99552,
+            "apelido": "Rossi",
+            "posicao_id": 1,
+            "pontos": 6.0
+          },
+          "capitao_herdado": false
+        }
+      ]
     },
     {
       "time_id": 28680430,
       "nome": "Thunderbolt FC",
       "dono": "Douglas",
       "escudo": "https://s2-cartola.glbimg.com/IYpWl3kR6FbYdcjKxEIzFBczLOI=/https://s3.glbimg.com/v1/AUTH_58d78b787ec34892b5aaa0c7a146155f/cartola_assets_3/escudo/f2/30/27/00f63fb89f-0877-485c-8597-f1d307bfb3f220260122163027",
-      "pontos_parcial": 57.23,
-      "atletas_jogados": 10,
+      "pontos_parcial": 69.03,
+      "atletas_jogados": 11,
       "atletas_total": 12,
       "total_geral_oficial": 2895.9531,
-      "total_geral_parcial": 2953.1831,
+      "total_geral_parcial": 2964.9831,
       "posicao_oficial": 16,
       "posicao_parcial": 15,
-      "posicao_rodada": 15,
+      "posicao_rodada": 8,
       "variacao": 1,
-      "zona_premiacao": false
+      "zona_premiacao": false,
+      "substituicoes": [
+        {
+          "tipo": "reserva",
+          "sai": {
+            "atleta_id": 131832,
+            "apelido": "Portilla",
+            "posicao_id": 4,
+            "pontos": 0.0
+          },
+          "entra": {
+            "atleta_id": 103295,
+            "apelido": "Eric Ramires",
+            "posicao_id": 4,
+            "pontos": 3.5
+          },
+          "capitao_herdado": false
+        },
+        {
+          "tipo": "luxo",
+          "sai": {
+            "atleta_id": 90031,
+            "apelido": "Mendoza",
+            "posicao_id": 5,
+            "pontos": 7.4
+          },
+          "entra": {
+            "atleta_id": 123101,
+            "apelido": "Leozinho",
+            "posicao_id": 5,
+            "pontos": 15.7
+          },
+          "capitao_herdado": false
+        }
+      ]
     },
     {
       "time_id": 4981831,
       "nome": "Cruzmaltinus",
       "dono": "Wilson",
       "escudo": "https://s2-cartola.glbimg.com/721pdFY-BG1uigmxpk_9BquRVfA=/https://s3.glbimg.com/v1/AUTH_58d78b787ec34892b5aaa0c7a146155f/cartola_assets_2/escudo/14/20/25/000922a40d-6f87-4a5d-879d-4588dca8431420260121202025",
-      "pontos_parcial": 43.41,
-      "atletas_jogados": 9,
+      "pontos_parcial": 46.31,
+      "atletas_jogados": 10,
       "atletas_total": 12,
       "total_geral_oficial": 2903.4531,
-      "total_geral_parcial": 2946.8631,
+      "total_geral_parcial": 2949.7631,
       "posicao_oficial": 15,
       "posicao_parcial": 16,
-      "posicao_rodada": 29,
+      "posicao_rodada": 28,
       "variacao": -1,
-      "zona_premiacao": false
+      "zona_premiacao": false,
+      "substituicoes": [
+        {
+          "tipo": "reserva",
+          "sai": {
+            "atleta_id": 42234,
+            "apelido": "Cássio",
+            "posicao_id": 1,
+            "pontos": 0.0
+          },
+          "entra": {
+            "atleta_id": 117404,
+            "apelido": "Otávio",
+            "posicao_id": 1,
+            "pontos": 2.9
+          },
+          "capitao_herdado": false
+        }
+      ]
     },
     {
       "time_id": 14083410,
@@ -288,7 +500,7 @@
       "total_geral_parcial": 2938.0238,
       "posicao_oficial": 17,
       "posicao_parcial": 17,
-      "posicao_rodada": 27,
+      "posicao_rodada": 26,
       "variacao": 0,
       "zona_premiacao": false
     },
@@ -304,7 +516,7 @@
       "total_geral_parcial": 2922.8738,
       "posicao_oficial": 19,
       "posicao_parcial": 18,
-      "posicao_rodada": 18,
+      "posicao_rodada": 19,
       "variacao": 1,
       "zona_premiacao": false
     },
@@ -320,7 +532,7 @@
       "total_geral_parcial": 2915.3162,
       "posicao_oficial": 21,
       "posicao_parcial": 19,
-      "posicao_rodada": 1,
+      "posicao_rodada": 2,
       "variacao": 2,
       "zona_premiacao": false
     },
@@ -345,14 +557,14 @@
       "nome": "Digaomd",
       "dono": "Digão",
       "escudo": "https://s2-cartola.glbimg.com/pqo9wSLuIoaOgng9nWVyBE-gHa0=/https://s3.glbimg.com/v1/AUTH_58d78b787ec34892b5aaa0c7a146155f/cartola_assets_2/escudo/8a/14/32/000c9614e8-2525-43df-9023-33f5a416768a20260121121432",
-      "pontos_parcial": 48.28,
+      "pontos_parcial": 46.78,
       "atletas_jogados": 9,
       "atletas_total": 12,
       "total_geral_oficial": 2863.4062,
-      "total_geral_parcial": 2911.6862,
+      "total_geral_parcial": 2910.1862,
       "posicao_oficial": 20,
       "posicao_parcial": 21,
-      "posicao_rodada": 25,
+      "posicao_rodada": 27,
       "variacao": -1,
       "zona_premiacao": false
     },
@@ -368,7 +580,7 @@
       "total_geral_parcial": 2810.5781,
       "posicao_oficial": 23,
       "posicao_parcial": 22,
-      "posicao_rodada": 14,
+      "posicao_rodada": 16,
       "variacao": 1,
       "zona_premiacao": false
     },
@@ -384,7 +596,7 @@
       "total_geral_parcial": 2810.3312,
       "posicao_oficial": 22,
       "posicao_parcial": 23,
-      "posicao_rodada": 19,
+      "posicao_rodada": 21,
       "variacao": -1,
       "zona_premiacao": false
     },
@@ -400,7 +612,7 @@
       "total_geral_parcial": 2799.0375,
       "posicao_oficial": 24,
       "posicao_parcial": 24,
-      "posicao_rodada": 10,
+      "posicao_rodada": 12,
       "variacao": 0,
       "zona_premiacao": false
     },
@@ -416,7 +628,7 @@
       "total_geral_parcial": 2724.1725,
       "posicao_oficial": 25,
       "posicao_parcial": 25,
-      "posicao_rodada": 5,
+      "posicao_rodada": 6,
       "variacao": 0,
       "zona_premiacao": false
     },
@@ -425,32 +637,68 @@
       "nome": "Taiada na Pelada FC",
       "dono": "Samuel",
       "escudo": "https://s2-cartola.glbimg.com/iM4Eudjiuo00Na1PKtKJ4vHOfKM=/https://s3.glbimg.com/v1/AUTH_58d78b787ec34892b5aaa0c7a146155f/cartola_assets_3/escudo/c1/12/27/008d7f6ee6-5dad-49c3-bf94-c708baff20c120260127161227",
-      "pontos_parcial": 63.71,
-      "atletas_jogados": 9,
+      "pontos_parcial": 66.61,
+      "atletas_jogados": 10,
       "atletas_total": 12,
       "total_geral_oficial": 2630.25,
-      "total_geral_parcial": 2693.96,
+      "total_geral_parcial": 2696.86,
       "posicao_oficial": 26,
       "posicao_parcial": 26,
-      "posicao_rodada": 8,
+      "posicao_rodada": 10,
       "variacao": 0,
-      "zona_premiacao": false
+      "zona_premiacao": false,
+      "substituicoes": [
+        {
+          "tipo": "reserva",
+          "sai": {
+            "atleta_id": 42234,
+            "apelido": "Cássio",
+            "posicao_id": 1,
+            "pontos": 0.0
+          },
+          "entra": {
+            "atleta_id": 117404,
+            "apelido": "Otávio",
+            "posicao_id": 1,
+            "pontos": 2.9
+          },
+          "capitao_herdado": false
+        }
+      ]
     },
     {
       "time_id": 360448,
       "nome": "RGiovanella FC",
       "dono": "Rafael Giovanella",
       "escudo": "https://s2-cartola.glbimg.com/9PjU3CH82AkF1_-Saf_OHvnPdZY=/https://s3.glbimg.com/v1/AUTH_58d78b787ec34892b5aaa0c7a146155f/cartola_assets_2/escudo/ce/39/39/004a9dd78c-8563-40bb-9ec9-5854e711d8ce20260121093939",
-      "pontos_parcial": 54.58,
+      "pontos_parcial": 56.08,
       "atletas_jogados": 10,
       "atletas_total": 12,
       "total_geral_oficial": 2607.1719,
-      "total_geral_parcial": 2661.7519,
+      "total_geral_parcial": 2663.2519,
       "posicao_oficial": 29,
       "posicao_parcial": 27,
       "posicao_rodada": 17,
       "variacao": 2,
-      "zona_premiacao": false
+      "zona_premiacao": false,
+      "substituicoes": [
+        {
+          "tipo": "luxo",
+          "sai": {
+            "atleta_id": 39148,
+            "apelido": "Hulk",
+            "posicao_id": 5,
+            "pontos": 0.2
+          },
+          "entra": {
+            "atleta_id": 131967,
+            "apelido": "Villarreal",
+            "posicao_id": 5,
+            "pontos": 1.8
+          },
+          "capitao_herdado": false
+        }
+      ]
     },
     {
       "time_id": 1083198,
@@ -464,7 +712,7 @@
       "total_geral_parcial": 2659.2062,
       "posicao_oficial": 28,
       "posicao_parcial": 28,
-      "posicao_rodada": 24,
+      "posicao_rodada": 25,
       "variacao": 0,
       "zona_premiacao": false
     },
@@ -496,7 +744,7 @@
       "total_geral_parcial": 2657.255,
       "posicao_oficial": 30,
       "posicao_parcial": 30,
-      "posicao_rodada": 7,
+      "posicao_rodada": 9,
       "variacao": 0,
       "zona_premiacao": false
     },
@@ -505,30 +753,48 @@
       "nome": "Tchoucen Tchoucen",
       "dono": "Sérgio",
       "escudo": "https://s2-cartola.glbimg.com/Y2RAisC125QCkbSX62-f78TcM3A=/https://s3.glbimg.com/v1/AUTH_58d78b787ec34892b5aaa0c7a146155f/cartola_assets_2/escudo/2e/38/14/001fc7b55d-b6bb-4fe1-877e-de7a57b7242e20260120113814",
-      "pontos_parcial": 25.33,
-      "atletas_jogados": 7,
+      "pontos_parcial": 26.13,
+      "atletas_jogados": 8,
       "atletas_total": 12,
       "total_geral_oficial": 2523.2344,
-      "total_geral_parcial": 2548.5644,
+      "total_geral_parcial": 2549.3644,
       "posicao_oficial": 31,
       "posicao_parcial": 31,
       "posicao_rodada": 33,
       "variacao": 0,
-      "zona_premiacao": false
+      "zona_premiacao": false,
+      "substituicoes": [
+        {
+          "tipo": "reserva",
+          "sai": {
+            "atleta_id": 123869,
+            "apelido": "Aguirre",
+            "posicao_id": 3,
+            "pontos": 0.0
+          },
+          "entra": {
+            "atleta_id": 123445,
+            "apelido": "Dantas",
+            "posicao_id": 3,
+            "pontos": 0.8
+          },
+          "capitao_herdado": false
+        }
+      ]
     },
     {
       "time_id": 143442,
       "nome": "Time do Cuné",
       "dono": "Cuné",
       "escudo": "https://s2-cartola.glbimg.com/PKUhydSaIxHTyNIAlJzMj9tAObU=/https://s3.glbimg.com/v1/AUTH_58d78b787ec34892b5aaa0c7a146155f/cartola_assets_3/escudo/16/31/45/00feab9a1f-2813-4049-8cfb-c1ac22d92b1620260124183145",
-      "pontos_parcial": 46.51,
+      "pontos_parcial": 45.01,
       "atletas_jogados": 9,
       "atletas_total": 12,
       "total_geral_oficial": 2269.625,
-      "total_geral_parcial": 2316.135,
+      "total_geral_parcial": 2314.635,
       "posicao_oficial": 32,
       "posicao_parcial": 32,
-      "posicao_rodada": 28,
+      "posicao_rodada": 29,
       "variacao": 0,
       "zona_premiacao": false
     },
