@@ -108,6 +108,29 @@
     return { view: "inicio" };
   }
 
+  function rotaPath(rota) {
+    if (rota.view === "copa") return "copa-" + rota.n;
+    return rota.view;
+  }
+
+  function tituloRota(rota) {
+    if (rota.view === "inicio") return "Início — Caneleiros Ligui 2026";
+    if (rota.view === "medalhas") return "Medalhas — Caneleiros Ligui 2026";
+    if (rota.view === "parciais") return "Parciais — Caneleiros Ligui 2026";
+    if (rota.view === "copa") return "Copa " + rota.n + " — Caneleiros Ligui 2026";
+    return "Caneleiros Ligui 2026";
+  }
+
+  function registrarPageView(rota) {
+    if (typeof gtag !== "function") return;
+    const path = "/" + rotaPath(rota);
+    gtag("event", "page_view", {
+      page_title: tituloRota(rota),
+      page_location: location.href,
+      page_path: path,
+    });
+  }
+
   function setNav(rota) {
     document.querySelectorAll(".nav > a").forEach((a) => {
       const on = (rota.view === "inicio" && a.dataset.nav === "inicio") ||
@@ -475,7 +498,9 @@
 
   function onHash() {
     if (!ESTADO.dados) return;
-    mostrar(parseHash());
+    const rota = parseHash();
+    mostrar(rota);
+    registrarPageView(rota);
   }
 
   function ligarNav() {
