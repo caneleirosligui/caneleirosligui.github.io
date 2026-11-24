@@ -1,5 +1,5 @@
 {
-  "rodada_referencia": 35,
+  "rodada_referencia": 37,
   "pontos": 145.4902,
   "vencedores": [
     {
@@ -435,6 +435,30 @@
           "nome": "MarkPlay FC",
           "dono": "Marquinhos",
           "pontos": 96.9902
+        }
+      ]
+    },
+    {
+      "rodada": 36,
+      "pontos": 89.71,
+      "times": [
+        {
+          "time_id": 133633,
+          "nome": "Lusa Cruzmaltina J.R",
+          "dono": "Juninho (Raimundo)",
+          "pontos": 89.71
+        }
+      ]
+    },
+    {
+      "rodada": 37,
+      "pontos": 89.71,
+      "times": [
+        {
+          "time_id": 133633,
+          "nome": "Lusa Cruzmaltina J.R",
+          "dono": "Juninho (Raimundo)",
+          "pontos": 89.71
         }
       ]
     }

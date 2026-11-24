@@ -1,5 +1,5 @@
 {
-  "rodada_referencia": 35,
+  "rodada_referencia": 37,
   "copas": [
     {
       "id": 1,
@@ -2922,7 +2922,7 @@
       "quartas_rodada": 34,
       "semi_rodada": 35,
       "final_rodada": 36,
-      "fase": "semifinal",
+      "fase": "encerrada",
       "grupos": {
         "A": [
           {
@@ -3854,7 +3854,8 @@
             "dono": "Michael",
             "seed": "1B",
             "posicao_grupo": 1,
-            "grupo": "B"
+            "grupo": "B",
+            "pontos": 64.21
           },
           "b": {
             "time_id": 13979075,
@@ -3862,11 +3863,18 @@
             "dono": "Renato",
             "seed": "3C",
             "posicao_grupo": 3,
-            "grupo": "C"
+            "grupo": "C",
+            "pontos": 88.8599
           },
-          "pendente": true
+          "vencedor_id": 13979075,
+          "empate": false,
+          "pendente": false
         },
-        "campeao": null
+        "campeao": {
+          "time_id": 13979075,
+          "nome": "Hysterical Dog",
+          "dono": "Renato"
+        }
       }
     }
   ]

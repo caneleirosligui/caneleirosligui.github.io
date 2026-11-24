@@ -3,7 +3,7 @@
   "taxa": 100,
   "arrecadado": 3500,
   "total_distribuido": 3500,
-  "rodada_referencia": 35,
+  "rodada_referencia": 37,
   "itens": [
     {
       "id": "geral_1",
@@ -121,9 +121,15 @@
       "id": "copa_4",
       "label": "Copa 4",
       "valor": 200,
-      "status": "em_andamento",
-      "situacao": null,
-      "ganhadores": []
+      "status": "definido",
+      "situacao": "campeão",
+      "ganhadores": [
+        {
+          "time_id": 13979075,
+          "nome": "Hysterical Dog",
+          "dono": "Renato"
+        }
+      ]
     },
     {
       "id": "maior_pontuacao",
